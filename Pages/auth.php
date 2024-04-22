@@ -26,6 +26,9 @@ if (isset($_SESSION['id'])) {
             max-width: 300px;
             text-align: center;
         }
+        h3 {
+            color: #634E42;
+        }
         .container {
             background-color: #F39200;
             border-radius: 8px;
@@ -57,6 +60,20 @@ if (isset($_SESSION['id'])) {
         ::placeholder {
             color: #F39200;
         }
+        .captcha {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            border-color: #634E42;
+        }
+        .captcha img {
+            margin-bottom: 10px;
+            border-radius: 5px;
+        }
+        .captcha input[type="text"] {
+            width: calc(100% - 25px);
+            text-align: center;
+        }
         input[type="submit"] {
             width: 100%;
             padding: 10px;
@@ -83,20 +100,20 @@ if (isset($_SESSION['id'])) {
     </style>
 </head>
 <body>
-<div class="container">
-    <img src="../images/STOLOVKA.png">
-    <h1>Авторизация</h1>
-    <form action="../php/authorization.php" method="post">
-        <input type="text" name="phone_number" placeholder="Введите номер телефона" required>
-        <input type="password" name="password" placeholder="Введите пароль" required>
-        <div class="captcha">
-            <h3>Проверочный код</h3>
-            <img src="../php/captcha.php" alt="CAPTCHA"/>
-            <input type="text" name="captcha" placeholder="Введите код с картинки" required>
-            <input type="submit" value="Войти">
-        </div>
-    </form>
-    <a href="register.php">Зарегистрироваться</a>
-</div>
+    <div class="container">
+        <img src="../images/STOLOVKA.png">
+        <h1>Авторизация</h1>
+        <form action="../php/authorization.php" method="post">
+            <input type="text" name="phone_number" placeholder="Введите номер телефона" required>
+            <input type="password" name="password" placeholder="Введите пароль" required>
+            <div class="captcha">
+                <h3>Проверочный код</h3>
+                <img src="../php/captcha.php" alt="CAPTCHA"/>
+                <input type="text" name="captcha" placeholder="Введите код с картинки" required>
+                <input type="submit" value="Войти">
+            </div>
+        </form>
+        <a href="register.php">Зарегистрироваться</a>
+    </div>
 </body>
 </html>
