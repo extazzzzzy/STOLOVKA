@@ -33,8 +33,3 @@ if (!imagettftext($image, 30, 0, 10, 40, $color, $dir . "Obitaemostrov.ttf", $_S
 header("Content-type: image/png");
 imagepng($image);
 imagedestroy($image);
-<<<<<<< HEAD
-?>
-=======
-?>
->>>>>>> 1c284b995df3d8c0780b2afe5a32a21b61d99d64

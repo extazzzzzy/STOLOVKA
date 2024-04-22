@@ -29,7 +29,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $user = $result->fetch_assoc();
 
             $_SESSION['id'] = $user['id'];
-            header('Location: profile.php');
+            header('Location: ../Pages/profile.php');
             if (!($_SESSION['id'])) {
                 echo "Пользователь не найден";
             }
