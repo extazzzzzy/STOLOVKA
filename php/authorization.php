@@ -1,44 +1,40 @@
 <?php
 session_start();
-const DB_HOST = 'localhost';
-const DB_USER = 'root';
-const DB_PASSWORD = 'root';
-const DB_NAME = 'stolovka';
 
-$mysql = new mysqli(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME);
-if ($mysql->connect_error) {
-    die("Connection failed: " . $mysql->connect_error);
-}
+if (isset($_POST['captcha']) && isset($_SESSION['rand_code']) && strtolower($_POST['captcha']) === $_SESSION['rand_code'])
+{
+    $connectMySQL = new mysqli('localhost', 'root', 'root', 'Stolovka');
 
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    if (isset($_POST['captcha']) && isset($_SESSION['rand_code']) && $_POST['captcha'] === $_SESSION['rand_code']) {
-        $phone_number = $_POST['phone_number'];
-        $password = $_POST['password'];
+    $phone_number = $_POST['phone_number'];
+    $password = $_POST['password'];
 
-        $statement = $mysql->prepare("SELECT * FROM users WHERE phone_number = ? AND password = ?");
-        if (!$statement) {
-            die("Ошибка подготовки запроса: " . $mysql->error);
+    $query = $connectMySQL->prepare("SELECT * FROM users WHERE phone_number=?");
+    $query->bind_param("s", $phone_number);
+    $query->execute();
+
+    $result = $query->get_result();
+
+    if ($result)
+    {
+        if ($result->num_rows > 0)
+        {
+            $data = $result->fetch_assoc();
+            $_SESSION['id'] = $data['id'];
+            $_SESSION['role'] = $data['role'];
+            header("Location: ../Pages/profile.php");
         }
-        $statement->bind_param("ss", $phone_number, $password);
-        if (!$statement->execute()) {
-            die("Ошибка выполнения запроса: " . $statement->error);
+        else
+        {
+            echo "Неверный логин или пароль";
         }
-
-        $result = $statement->get_result();
-        if ($result->num_rows > 0) {
-            $user = $result->fetch_assoc();
-
-            $_SESSION['id'] = $user['id'];
-            header('Location: ../Pages/profile.php');
-            if (!($_SESSION['id'])) {
-                echo "Пользователь не найден";
-            }
-        }
-        $statement->close();
-    } else {
-        echo "Капча введена неверно";
     }
-} else {
-    echo "Ошибка";
+    else
+    {
+        header("Location: authorization.php");
+    }
+}
+else
+{
+    echo 'Неверная капча';
 }
 ?>
