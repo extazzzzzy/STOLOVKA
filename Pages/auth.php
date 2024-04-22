@@ -1,8 +1,7 @@
 <?php
 session_start();
-if (isset($_SESSION['id']))
-{
-    header("Location: ../Pages/profile.php");
+if (isset($_SESSION['id'])) {
+    header("Location: profile.php");
     exit();
 }
 ?>
@@ -23,11 +22,11 @@ if (isset($_SESSION['id']))
             align-items: center;
             height: 100vh;
         }
-        img{
+        img {
             max-width: 300px;
             text-align: center;
         }
-        h3{
+        h3 {
             color: #634E42;
         }
         .container {
@@ -36,18 +35,15 @@ if (isset($_SESSION['id']))
             padding: 20px;
             width: 300px;
         }
-
         h1 {
             color: #634E42;
             text-align: center;
             margin-bottom: 20px;
         }
-
         form {
             display: flex;
             flex-direction: column;
         }
-
         input[type="text"],
         input[type="password"] {
             color: #F39200;
@@ -62,7 +58,7 @@ if (isset($_SESSION['id']))
             font-size: 16px;
         }
         ::placeholder {
-            color:    #F39200;
+            color: #F39200;
         }
         .captcha {
             display: flex;
@@ -70,17 +66,14 @@ if (isset($_SESSION['id']))
             align-items: center;
             border-color: #634E42;
         }
-
         .captcha img {
             margin-bottom: 10px;
             border-radius: 5px;
         }
-
         .captcha input[type="text"] {
-            width: 150px;
+            width: calc(100% - 25px);
             text-align: center;
         }
-
         input[type="submit"] {
             width: 100%;
             padding: 10px;
@@ -91,11 +84,9 @@ if (isset($_SESSION['id']))
             cursor: pointer;
             transition: background-color 0.3s ease;
         }
-
         input[type="submit"]:hover {
             background-color: #AA6304;
         }
-
         a {
             text-decoration: none;
             color: #AA6304;
@@ -103,7 +94,6 @@ if (isset($_SESSION['id']))
             display: block;
             margin-top: 10px;
         }
-
         a:hover {
             text-decoration: underline;
         }
