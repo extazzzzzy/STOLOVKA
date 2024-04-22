@@ -41,6 +41,7 @@
         input[type="text"],
         input[type="email"],
         input[type="password"] {
+            color: #F39200;
             width: calc(100% - 20px);
             padding: 10px;
             margin-bottom: 10px;
