@@ -104,7 +104,7 @@ if (isset($_SESSION['id'])) {
         <img src="../images/STOLOVKA.png">
         <h1>Авторизация</h1>
         <form action="../php/authorization.php" method="post">
-            <input type="text" name="phone_number" placeholder="Введите номер телефона" required>
+            <input id="ph_num" maxlength="11" type="text" name="phone_number" placeholder="Введите номер телефона" required>
             <input type="password" name="password" placeholder="Введите пароль" required>
             <div class="captcha">
                 <h3>Проверочный код</h3>
@@ -115,5 +115,16 @@ if (isset($_SESSION['id'])) {
         </form>
         <a href="register.php">Зарегистрироваться</a>
     </div>
+    <script>
+        let phone_number = document.getElementById('ph_num');
+
+        phone_number.addEventListener('keydown', (e) => {
+        if(['0','1','2','3','4', '5', '6', '7', '8', '9', 'Backspace', 'ControlLeft', 'Delete'].indexOf(e.key) !== -1){
+            
+        } else {
+            e.preventDefault();
+        }
+        });
+    </script>
 </body>
 </html>
