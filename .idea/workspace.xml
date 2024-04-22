@@ -5,14 +5,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="684de69a-1997-4068-8f67-e1029cd61f32" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/fonts/Obitaemostrov.ttf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/images/STOLOVKA.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/php/authorization.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/php/registration.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/php.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/php.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/php/captcha.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Pages/auth.php" beforeDir="false" afterPath="$PROJECT_DIR$/Pages/auth.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Pages/register.php" beforeDir="false" afterPath="$PROJECT_DIR$/Pages/register.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/php/authorization.php" beforeDir="false" afterPath="$PROJECT_DIR$/php/authorization.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/php/registration.php" beforeDir="false" afterPath="$PROJECT_DIR$/php/registration.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -34,18 +31,18 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "WebServerToolWindowFactoryState": "false",
-    "last_opened_file_path": "C:/OSPanel/domains/STOLOVKA/images",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/OSPanel/domains/STOLOVKA/images&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\OSPanel\domains\STOLOVKA\images" />
@@ -66,6 +63,7 @@
       <updated>1713774389400</updated>
       <workItem from="1713774390404" duration="239000" />
       <workItem from="1713777206281" duration="7166000" />
+      <workItem from="1713789998261" duration="1709000" />
     </task>
     <servers />
   </component>

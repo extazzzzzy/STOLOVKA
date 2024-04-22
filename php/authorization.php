@@ -28,10 +28,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         if ($result->num_rows > 0) {
             $user = $result->fetch_assoc();
 
-            $_SESSION['phone_number'] = $phone_number;
-            $_SESSION['role'] = $user['role'];
-
-            if (!($_SESSION['role'])) {
+            $_SESSION['id'] = $user['id'];
+            header('Location: profile.php');
+            if (!($_SESSION['id'])) {
                 echo "Пользователь не найден";
             }
         }

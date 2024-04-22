@@ -111,7 +111,7 @@
             <input type="text" name="phone_number" placeholder="Введите номер телефона" required>
             <input type="password" name="password" placeholder="Введите пароль" required>
             <div class="captcha">
-                <h3>Проверчный код</h3>
+                <h3>Проверочный код</h3>
                 <img src="../php/captcha.php" alt="CAPTCHA"/>
                 <input type="text" name="captcha" placeholder="Введите код с картинки" required>
                 <input type="submit" value="Войти">
