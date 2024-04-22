@@ -12,6 +12,6 @@
     $query -> bind_param("ssi", $name, $address, $id);
     $query->execute();
     
-    header("Location: http://localhost/Pages/profile.php");
+    header("Location: ../Pages/profile.php");
     die();
 ?>

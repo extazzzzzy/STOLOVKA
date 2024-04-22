@@ -6,33 +6,41 @@
     <title>Document</title>
 </head>
 <body>
+    <header>
+        <?php
+            session_start();
+            echo "<div><a href='profile.php'>Профиль</a></div>"; 
+            echo "<div><a href='orders.php'>Заказы</a></div>";
+
+            if ($_SESSION['role'] == "user") {
+                echo "<div><a href='catalog.php'>Каталог</a></div>"; 
+                echo "<div><a href='cart.php'>Корзина</a></div>"; 
+            }
+            else if ($_SESSION['role'] == "manager") {
+                echo "<div><a href='catalog.php'>Каталог</a></div>"; 
+            }
+        ?>
+    </header>
     <?php
         session_start();
         $connectMySQL = new mysqli('localhost', 'root', 'root', 'stolovka');
         $id = $_SESSION['id'];
         $role = $_SESSION['role'];
 
-        if ($role != "user" || $_SESSION['id'] == "")
-        {
-            header("Location: http://localhost/Pages/auth.php");
-            die();
-        }
-        else {
-            $username = $connectMySQL -> query("SELECT `first_name` FROM `users` WHERE `id` = '$id'") -> fetch_assoc()['first_name'];
-            $phone_number = $connectMySQL -> query("SELECT `phone_number` FROM `users` WHERE `id` = '$id'") -> fetch_assoc()['phone_number'];
-            $address = $connectMySQL -> query("SELECT `address` FROM `users` WHERE `id` = '$id'") -> fetch_assoc()['address'];
+        $username = $connectMySQL -> query("SELECT `first_name` FROM `users` WHERE `id` = '$id'") -> fetch_assoc()['first_name'];
+        $phone_number = $connectMySQL -> query("SELECT `phone_number` FROM `users` WHERE `id` = '$id'") -> fetch_assoc()['phone_number'];
+        $address = $connectMySQL -> query("SELECT `address` FROM `users` WHERE `id` = '$id'") -> fetch_assoc()['address'];
 
-            echo "<div><h1>Name: " . $username . "</h1>";
-            echo "<h3>Phone: " . $phone_number . "</h3>";
-            echo "<h3>Address: " . $address . "</h3>";
-            echo "<h3>Role: " . $role . "</h3></div>";
+        echo "<div><h1>Name: " . $username . "</h1>";
+        echo "<h3>Phone: " . $phone_number . "</h3>";
+        echo "<h3>Address: " . $address . "</h3>";
+        echo "<h3>Role: " . $role . "</h3></div>";
 
-            echo "<form id='reg' style='display: none;' action='../php/userDataChange.php' method='post'>
-                    <input type='text' name='edit_f_name' style='margin-bottom: 5px;' value='$username'></br>
-                    <input type='text' name='edit_add' style='margin-bottom: 5px;' value='$address'></br>
-                    <input type='submit' name='edit_btn' style='margin-bottom: 5px;' value='Внести изменения'>
-                </form>"; 
-        }
+        echo "<form id='reg' style='display: none;' action='../php/userDataChange.php' method='post'>
+                <input type='text' name='edit_f_name' style='margin-bottom: 5px;' value='$username'></br>
+                <input type='text' name='edit_add' style='margin-bottom: 5px;' value='$address'></br>
+                <input type='submit' name='edit_btn' style='margin-bottom: 5px;' value='Внести изменения'>
+            </form>"; 
     ?>
     <div style='margin-bottom: 5px;'><button id="show_form" style="display:block;" onclick="HideForm(0)">Изменить данные</button>
     <button id="hide_form" style="display:none;" onclick="HideForm(1)">Скрыть</button></div>
