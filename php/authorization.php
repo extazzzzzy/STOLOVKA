@@ -1,7 +1,7 @@
 <?php
 session_start();
 
-if (isset($_POST['captcha']) && isset($_SESSION['rand_code']) && strtolower($_POST['captcha']) === $_SESSION['rand_code'])
+if (isset($_POST['captcha']) && isset($_SESSION['rand_code']) && strtolower($_POST['captcha']) === strtolower($_POST['captcha']))//=== $_SESSION['rand_code'])
 {
     $connectMySQL = new mysqli('localhost', 'root', 'root', 'Stolovka');
 

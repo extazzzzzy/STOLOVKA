@@ -74,16 +74,22 @@ if (!isset($_SESSION['id']))
 
                 $temp = $row['id'];
                 $result2 = $connectMySQL->query("SELECT ingredient_id, is_included FROM products_to_ingredients WHERE product_id = '$temp'");
+                echo '<form action="add_product.php" method="post">';
                 while ($row2 = $result2->fetch_assoc())
                 {
                     $temp2 = $row2['ingredient_id'];
                     $temp3 = $row2['is_included'];
                     $result3 = $connectMySQL->query("SELECT name FROM ingredients WHERE id = '$temp2'");
+
+                    echo '    <input type="hidden" name="review_id" value="' . $row['id'] . '">';
+                    echo '    <button type="submit" class="delete_review_btn">Удалить отзыв</button>';
+
                     echo $result3->fetch_assoc()['name'];
                     echo '<input type="checkbox" value="' . $temp3 . '" ' . ($temp3 == 1 ? 'checked' : '') . '>';
                     echo '<br>';
-
                 }
+                echo '</form>';
+
                 echo '</div>';
                 echo '</div>';
             }
