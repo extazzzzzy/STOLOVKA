@@ -130,47 +130,48 @@ $address = $connectMySQL->query("SELECT `address` FROM `users` WHERE `id` = '$id
 </head>
 <body>
 <footer>
-<div class="container">
-    <nav>
-        <a href='orders.php'>Заказы</a>
-        <?php
-        if ($_SESSION['role'] == "user") {
-            echo "<a href='catalog.php'>Каталог</a>";
-            echo "<a href='cart.php'>Корзина</a>";
-        } elseif ($_SESSION['role'] == "manager") {
-            echo "<a href='catalog.php'>Каталог</a>";
-        }
-        ?>
-    </nav>
-    <img src="../images/STOLOVKA.png">
-    <h1><?php echo "Привет, $username!"; ?></h1>
-    <div class="container_another">
-        <h3>Телефон: <?php echo $phone_number; ?></h3>
-        <h3>Адрес: <?php echo $address; ?></h3>
-        <h3>Роль: <?php echo $role; ?></h3>
-    </div>
+    <div class="container">
+        <nav>
+            <a href='orders.php'>Заказы</a>
+            <?php
+            if ($_SESSION['role'] == "user") {
+                echo "<a href='catalog.php'>Каталог</a>";
+                echo "<a href='cart.php'>Корзина</a>";
+            } elseif ($_SESSION['role'] == "manager") {
+                echo "<a href='catalog.php'>Каталог</a>";
+            }
+            ?>
+        </nav>
+        <img src="../images/STOLOVKA.png">
+        <h1><?php echo "Привет, $username!"; ?></h1>
+        <div class="container_another">
+            <h3>Телефон: <?php echo $phone_number; ?></h3>
+            <h3>Адрес: <?php echo $address; ?></h3>
+            <h3>Роль: <?php echo $role; ?></h3>
+        </div>
 
-    <form id="editForm" style="display: none;" action="../php/userDataChange.php" method="post">
-        <input type="text" name="edit_f_name" style="margin-bottom: 5px;" value="<?php echo $username; ?>"><br>
-        <input type="text" name="edit_add" style="margin-bottom: 5px;" value="<?php echo $address; ?>"><br>
-        <input type="submit" name="edit_btn" style="margin-bottom: 5px;" value="Внести изменения">
-    </form>
-    <div style="margin-bottom: 5px; display: flex; justify-content: center;">
-        <button id="show_form" onclick="hideForm()"></button>
-    </div>
-
-    <div style="margin-bottom: 5px; display: flex; justify-content: center;">
-        <form action="../php/logout.php" method="post">
-            <button type="submit" id="logout_btn"></button>
+        <form id="editForm" style="display: none;" action="../php/userDataChange.php" method="post">
+            <input type="text" name="edit_f_name" style="margin-bottom: 5px;" value="<?php echo $username; ?>"><br>
+            <input type="text" name="edit_add" style="margin-bottom: 5px;" value="<?php echo $address; ?>"><br>
+            <input type="submit" name="edit_btn" style="margin-bottom: 5px;" value="Внести изменения">
         </form>
+        <div style="margin-bottom: 5px; display: flex; justify-content: center;">
+            <button id="show_form" onclick="hideForm()"></button>
+        </div>
+
+        <div style="margin-bottom: 5px; display: flex; justify-content: center;">
+            <form action="../php/logout.php" method="post">
+                <button type="submit"
+                        id="logout_btn"></button>
+            </form>
+        </div>
     </div>
-</div>
-<script>
-    function hideForm() {
-        const form = document.getElementById('editForm');
-        form.style.display = form.style.display === 'none' ? 'block' : 'none';
-    }
-</script>
+    <script>
+        function hideForm() {
+            const form = document.getElementById('editForm');
+            form.style.display = form.style.display === 'none' ? 'block' : 'none';
+        }
+    </script>
 </footer>
 </body>
 </html>

@@ -1,10 +1,9 @@
 <?php
 session_start();
-if (isset($_SESSION['id'])) {
-    header("Location: profile.php");
-    exit();
-}
 ?>
+<?php if ($_SESSION['id'] != ''): ?>
+    <meta http-equiv="refresh" content="0; url=../Pages/profile.php"/>
+<?php endif?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
