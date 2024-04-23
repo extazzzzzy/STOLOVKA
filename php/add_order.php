@@ -24,6 +24,10 @@ while ($row = $products_result->fetch_assoc()) {
     }
 }
 
+$connectMySQL->query("DELETE FROM `carts_to_products`");
+$connectMySQL->query("DELETE FROM `carts_to_products_to_ingredients`");
+
+
 // Перенаправление на другую страницу после создания заказа
 header("Location: ../pages/orders.php");
 exit();

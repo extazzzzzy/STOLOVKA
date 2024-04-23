@@ -15,12 +15,23 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $price = $_POST["price"];
     $image_src = $_POST["image_src"];
 
-    $sql = "INSERT INTO products (name, price, image_src) VALUES ('$name', '$price', '$image_src')";
+    $file_name = $_FILES["image"]["name"];
+    $path = "/images/products/" . $file_name;
+    $image_extension = (pathinfo($path,PATHINFO_EXTENSION));
 
-    if ($mysql->query($sql) === TRUE) {
-        header('Location: ../Pages/catalog.php');
-    } else {
-        echo "Ошибка при добавлении нового товара: " . $mysql->error;
+    if (!in_array($image_extension, array("jpg", "jpeg", "png")))
+    {
+        echo "Ваш файл не был загружен.";
+    }
+    else
+    {
+        move_uploaded_file($_FILES["image"]["tmp_name"], "../" . $path);
+        $sql = "INSERT INTO products (name, price, image_src) VALUES ('$name', '$price', '$path')";
+        if ($mysql->query($sql) === TRUE) {
+            header('Location: ../Pages/catalog.php');
+        } else {
+            echo "Ошибка при добавлении нового товара: " . $mysql->error;
+        }
     }
 }
 $mysql->close();
