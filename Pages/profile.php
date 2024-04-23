@@ -173,5 +173,6 @@ $address = $connectMySQL->query("SELECT `address` FROM `users` WHERE `id` = '$id
         }
     </script>
 </footer>
+<a href="making_an_order.php">На оформление заказа</a>
 </body>
 </html>
