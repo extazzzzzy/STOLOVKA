@@ -11,7 +11,7 @@ $id = $_SESSION['id'];
 $address = $connectMySQL->query("SELECT `address` FROM `users` WHERE `id` = '$id'")->fetch_assoc()['address'];
 
 //$timezone = '+5'; //Время ЕКБ
-$timezone = '-5'; //Время ЕКБ
+$timezone = '+5'; //Время ЕКБ
 $time_order =  date('Y-m-d H:i:s',time()+($timezone*3600)); //взяли время с компа с учётом час.пояса
 
 $time_order = strtotime($time_order); //перевод времени в строковой формат
@@ -151,12 +151,12 @@ function set_deliv_Time($hour, $time_order) {
                 <h3>Когда вам доставить заказ?</h3>
                 <select name="status">
                     <option><?php set_deliv_Time(0, $time_order) ?></option>
-                    <option class='option_visib' value="time_plus_1h"><?php set_deliv_Time(1, $time_order) ?></option>
-                    <option class='option_visib' value="time_plus_2h"><?php set_deliv_Time(2, $time_order) ?></option>
-                    <option class='option_visib' value="time_plus_3h"><?php set_deliv_Time(3, $time_order) ?></option>
-                    <option class='option_visib' value="time_plus_4h"><?php set_deliv_Time(4, $time_order) ?></option>
-                    <option class='option_visib' value="time_plus_5h"><?php set_deliv_Time(5, $time_order) ?></option>
-                    <option class='option_visib' value="time_plus_6h"><?php set_deliv_Time(6, $time_order) ?></option>
+                    <option class='option_visib' value="<?php set_deliv_Time(1, $time_order) ?>"><?php set_deliv_Time(1, $time_order) ?></option>
+                    <option class='option_visib' value="<?php set_deliv_Time(2, $time_order) ?>"><?php set_deliv_Time(2, $time_order) ?></option>
+                    <option class='option_visib' value="<?php set_deliv_Time(3, $time_order) ?>"><?php set_deliv_Time(3, $time_order) ?></option>
+                    <option class='option_visib' value="<?php set_deliv_Time(4, $time_order) ?>"><?php set_deliv_Time(4, $time_order) ?></option>
+                    <option class='option_visib' value="<?php set_deliv_Time(5, $time_order) ?>"><?php set_deliv_Time(5, $time_order) ?></option>
+                    <option class='option_visib' value="<?php set_deliv_Time(6, $time_order) ?>"><?php set_deliv_Time(6, $time_order) ?></option>
                 </select><br>
                 <h3>Поле для ваших пожеланий</h3>
                 <input type="text" name="comment" placeholder="Напишите что-нибудь :-)" value=""><br>
