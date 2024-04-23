@@ -114,7 +114,7 @@ if ($_SESSION['role'] != "manager"){
 <body>
 <div class="container">
     <h3>Добавление нового продукта</h3>
-    <form action="../php/insert_product.php" method="post">
+    <form action="../php/insert_product.php" method="post" enctype="multipart/form-data">
         <div class="form-group">
             <label for="name">Название продукта:</label>
             <input type="text" id="name" name="name" required>
@@ -124,8 +124,8 @@ if ($_SESSION['role'] != "manager"){
             <input type="text" id="price" name="price" required>
         </div>
         <div class="form-group">
-            <label for="image_src">Путь к картинке:</label>
-            <input type="text" id="image_src" name="image_src" required>
+            <label for="image">Загрузить изображение:</label>
+            <input type="file" id="image" name="image" required>
         </div>
         <div class="form-group">
             <button type="submit">Добавить продукт</button>
