@@ -64,7 +64,7 @@ if ($_SESSION['id'] == ''): ?>
     }
 
     $userID = $_SESSION['id'];
-    $sql = "SELECT o.id, o.address, o.status, o.delivery_time, o.order_time,
+    $sql = "SELECT o.id, o.address, o.status, o.delivery_time, o.order_time, o.comment,
                (SELECT first_name FROM users WHERE id = o.deliveryman_id) AS deliveryman_first_name, 
                (SELECT phone_number FROM users WHERE id = o.deliveryman_id) AS deliveryman_phone_number, 
                GROUP_CONCAT(p.name SEPARATOR '<br>') AS dishes, 
@@ -87,6 +87,7 @@ if ($_SESSION['id'] == ''): ?>
         echo '<th>'."Статус заказа".'</th>';
         echo '<th>'."Дата и время доставки".'</th>';
         echo '<th>'."Заказанные блюда".'</th>';
+        echo '<th>'."Комментарий".'</th>';
         echo '<th>'."Общая сумма заказа".'</th>';
         echo '<th>'."Имя курьера".'</th>';
         echo '<th>'."Номер телефона курьера".'</th>';
@@ -133,6 +134,7 @@ if ($_SESSION['id'] == ''): ?>
                 echo '<br>';
             }
             echo '</td>';
+            echo '<td>'.$row['comment'].'</td>';
             echo '<td>'.$row['total_price']." RUB".'</td>';
             echo '<td>'.$row['deliveryman_first_name'].'</td>';
             echo '<td>'.$row['deliveryman_phone_number'].'</td>';
@@ -158,7 +160,7 @@ if ($_SESSION['id'] == ''): ?>
     }
 
     $userID = $_SESSION['id'];
-    $sql = "SELECT o.id, o.address, o.status, o.delivery_time, o.order_time, u.phone_number, u.first_name, 
+    $sql = "SELECT o.id, o.address, o.status, o.delivery_time, o.order_time, o.comment, u.phone_number, u.first_name, 
                       (SELECT first_name FROM users WHERE id = o.deliveryman_id) AS deliveryman_first_name, 
                (SELECT phone_number FROM users WHERE id = o.deliveryman_id) AS deliveryman_phone_number, 
        GROUP_CONCAT(p.name SEPARATOR '<br>') AS dishes, SUM(p.price) AS total_price
@@ -183,6 +185,7 @@ if ($_SESSION['id'] == ''): ?>
         echo '<th>'."Дата и время доставки".'</th>';
         echo '<th>'."Время заказа".'</th>';
         echo '<th>'."Заказанные блюда".'</th>';
+        echo '<th>'."Комментарий".'</th>';
         echo '<th>'."Общая сумма заказа".'</th>';
         echo '<th>'."Имя курьера".'</th>';
         echo '<th>'."Номер телефона курьера".'</th>';
@@ -252,6 +255,7 @@ if ($_SESSION['id'] == ''): ?>
                 echo '<br>';
             }
             echo '</td>';
+            echo '<td>'.$row['comment'].'</td>';
             echo '<td>'.$row['total_price']." RUB".'</td>';
             echo '<td>'.$row['deliveryman_first_name'].'</td>';
             echo '<td>'.$row['deliveryman_phone_number'].'</td>';
@@ -278,7 +282,7 @@ if ($_SESSION['id'] == ''): ?>
     }
 
     $userID = $_SESSION['id'];
-    $sql = "SELECT o.id, o.address, o.status, o.delivery_time, o.order_time, u.phone_number, u.first_name, 
+    $sql = "SELECT o.id, o.address, o.status, o.delivery_time, o.order_time, o.comment, u.phone_number, u.first_name,
        (SELECT first_name FROM users WHERE id = o.deliveryman_id) AS deliveryman_first_name, 
                (SELECT phone_number FROM users WHERE id = o.deliveryman_id) AS deliveryman_phone_number,
                GROUP_CONCAT(p.name SEPARATOR '<br>') AS dishes, SUM(p.price) AS total_price
@@ -286,7 +290,8 @@ if ($_SESSION['id'] == ''): ?>
         LEFT JOIN users u ON o.user_id = u.id
         LEFT JOIN orders_to_products otp ON o.id = otp.order_id
         LEFT JOIN products p ON otp.product_id = p.id
-        WHERE o.status IN ('На кухне', 'В ожидании курьера', 'В доставке', 'Утверждение курьера', 'Проблема с покупателем!', 'Доставлен')
+        WHERE (o.deliveryman_id IS NULL OR o.deliveryman_id = $userID)
+          AND o.status IN ('На кухне', 'В ожидании курьера', 'В доставке', 'Утверждение курьера', 'Проблема с покупателем!', 'Доставлен')
         GROUP BY o.id
         ORDER BY o.order_time DESC";
     $result = $conn->query($sql);
@@ -304,6 +309,7 @@ if ($_SESSION['id'] == ''): ?>
         echo '<th>'."Дата и время доставки".'</th>';
         echo '<th>'."Время заказа".'</th>';
         echo '<th>'."Заказанные блюда".'</th>';
+        echo '<th>'."Комментарий".'</th>';
         echo '<th>'."Общая сумма заказа".'</th>';
         echo '<th>'."Имя курьера".'</th>';
         echo '<th>'."Номер телефона курьера".'</th>';
@@ -396,6 +402,7 @@ if ($_SESSION['id'] == ''): ?>
                 echo '<br>';
             }
             echo '</td>';
+            echo '<td>'.$row['comment'].'</td>';
             echo '<td>'.$row['total_price']." RUB".'</td>';
             echo '<td>'.$row['deliveryman_first_name'].'</td>';
             echo '<td>'.$row['deliveryman_phone_number'].'</td>';
@@ -423,7 +430,7 @@ if ($_SESSION['id'] == ''): ?>
     }
 
     $userID = $_SESSION['id'];
-    $sql = "SELECT o.id, o.address, o.status, o.delivery_time, o.order_time, u.phone_number, u.first_name,
+    $sql = "SELECT o.id, o.address, o.status, o.delivery_time, o.order_time, o.comment, u.phone_number, u.first_name,
               (SELECT first_name FROM users WHERE id = o.deliveryman_id) AS deliveryman_first_name, 
                (SELECT phone_number FROM users WHERE id = o.deliveryman_id) AS deliveryman_phone_number,
        GROUP_CONCAT(p.name SEPARATOR '<br>') AS dishes, SUM(p.price) AS total_price
@@ -444,6 +451,7 @@ if ($_SESSION['id'] == ''): ?>
         echo '<th>'."№".'</th>';
         echo '<th>'."Время заказа".'</th>';
         echo '<th>'."Заказанные блюда".'</th>';
+        echo '<th>'."Комментарий".'</th>';
         echo '<th>'."Статус заказа".'</th>';
         echo '<th>'."Дата и время доставки".'</th>';
         echo '<th>'."Имя курьера".'</th>';
@@ -522,7 +530,7 @@ if ($_SESSION['id'] == ''): ?>
             else {
                 echo '<td>'.$row['status'].'</td>';
             }
-
+            echo '<td>'.$row['comment'].'</td>';
             echo '<td>'.$row['delivery_time'].'</td>';
             echo '<td>'.$row['deliveryman_first_name'].'</td>';
             echo '<td>'.$row['deliveryman_phone_number'].'</td>';

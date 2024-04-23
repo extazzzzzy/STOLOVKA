@@ -8,8 +8,8 @@ if (isset($_POST['captcha']) && isset($_SESSION['rand_code']) && strtolower($_PO
     $phone_number = $_POST['phone_number'];
     $password = $_POST['password'];
 
-    $query = $connectMySQL->prepare("SELECT * FROM users WHERE phone_number=?");
-    $query->bind_param("s", $phone_number);
+    $query = $connectMySQL->prepare("SELECT * FROM users WHERE phone_number=? AND password=?");
+    $query->bind_param("ss", $phone_number, $password);
     $query->execute();
 
     $result = $query->get_result();
