@@ -126,6 +126,8 @@
             var checkedIngredients = [];
             var checkboxes = form.querySelectorAll('input[type="checkbox"]:checked');
             checkboxes.forEach(function(checkbox) {
+                console.log(checkbox.value);
+
                 checkedIngredients.push(checkbox.value);
             });
 
@@ -137,8 +139,6 @@
 
             xhr.open('POST', '../php/add_product.php', true);
             xhr.send(formData);
-
-
 
             setTimeout(countChanger, 500);
 
@@ -154,7 +154,6 @@
             {
                 if (xhr.status === 200)
                 {
-                    console.log(document.getElementById('count').innerText)
                     document.getElementById('count').innerText = "Корзина " + xhr.responseText;
                 }
                 else
