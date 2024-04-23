@@ -99,7 +99,40 @@ if ($_SESSION['id'] == ''): ?>
             echo '<td>'.$row['address'].'</td>';
             echo '<td>'.$row['status'].'</td>';
             echo '<td>'.$row['delivery_time'].'</td>';
-            echo '<td>'.$row['dishes'].'</td>';
+            echo '<td>';
+
+            $order_id = $row['id'];
+            $dishes = explode("<br>", $row['dishes']);
+            for ($i = 0; $i < count($dishes); $i++)
+            {
+                echo $dishes[$i];
+                $dish_name = $dishes[$i];
+                $dish_id = $conn->query("SELECT id FROM `products` WHERE `name` = '$dish_name'")->fetch_assoc()['id'];
+                $user_ingredients_result = $conn->query("SELECT ingredient_id FROM `orders_to_products_to_ingredients` WHERE `order_id` = '$order_id' AND `product_id` = '$dish_id'");
+                if ($user_ingredients_result->num_rows > 0)
+                {
+                    echo '<br>';
+                }
+                while ($row2 = $user_ingredients_result->fetch_assoc())
+                {
+                    $ingredient_id = $row2['ingredient_id'];
+                    $ingredient_name= $conn->query("SELECT name FROM `ingredients` WHERE `id` = '$ingredient_id'")->fetch_assoc()['name'];
+                    if ($conn->query("SELECT is_included FROM `products_to_ingredients` WHERE `product_id` = '$dish_id' AND `ingredient_id` = '$ingredient_id'")->fetch_assoc()['is_included'] == 1)
+                    {
+                        echo 'Убрать: ' . $ingredient_name;
+                    }
+                    else
+                    {
+                        echo 'Добавить: ' . $ingredient_name;
+                    }
+                }
+                if ($i < count($dishes) - 1)
+                {
+                    echo '<br>';
+                }
+                echo '<br>';
+            }
+            echo '</td>';
             echo '<td>'.$row['total_price']." RUB".'</td>';
             echo '<td>'.$row['deliveryman_first_name'].'</td>';
             echo '<td>'.$row['deliveryman_phone_number'].'</td>';
@@ -185,7 +218,40 @@ if ($_SESSION['id'] == ''): ?>
             }
             echo '<td>'.$row['delivery_time'].'</td>';
             echo '<td>'.$row['order_time'].'</td>';
-            echo '<td>'.$row['dishes'].'</td>';
+            echo '<td>';
+
+            $order_id = $row['id'];
+            $dishes = explode("<br>", $row['dishes']);
+            for ($i = 0; $i < count($dishes); $i++)
+            {
+                echo $dishes[$i];
+                $dish_name = $dishes[$i];
+                $dish_id = $conn->query("SELECT id FROM `products` WHERE `name` = '$dish_name'")->fetch_assoc()['id'];
+                $user_ingredients_result = $conn->query("SELECT ingredient_id FROM `orders_to_products_to_ingredients` WHERE `order_id` = '$order_id' AND `product_id` = '$dish_id'");
+                if ($user_ingredients_result->num_rows > 0)
+                {
+                    echo '<br>';
+                }
+                while ($row2 = $user_ingredients_result->fetch_assoc())
+                {
+                    $ingredient_id = $row2['ingredient_id'];
+                    $ingredient_name= $conn->query("SELECT name FROM `ingredients` WHERE `id` = '$ingredient_id'")->fetch_assoc()['name'];
+                    if ($conn->query("SELECT is_included FROM `products_to_ingredients` WHERE `product_id` = '$dish_id' AND `ingredient_id` = '$ingredient_id'")->fetch_assoc()['is_included'] == 1)
+                    {
+                        echo 'Убрать: ' . $ingredient_name;
+                    }
+                    else
+                    {
+                        echo 'Добавить: ' . $ingredient_name;
+                    }
+                }
+                if ($i < count($dishes) - 1)
+                {
+                    echo '<br>';
+                }
+                echo '<br>';
+            }
+            echo '</td>';
             echo '<td>'.$row['total_price']." RUB".'</td>';
             echo '<td>'.$row['deliveryman_first_name'].'</td>';
             echo '<td>'.$row['deliveryman_phone_number'].'</td>';
@@ -296,7 +362,40 @@ if ($_SESSION['id'] == ''): ?>
 
             echo '<td>'.$row['delivery_time'].'</td>';
             echo '<td>'.$row['order_time'].'</td>';
-            echo '<td>'.$row['dishes'].'</td>';
+            echo '<td>';
+
+            $order_id = $row['id'];
+            $dishes = explode("<br>", $row['dishes']);
+            for ($i = 0; $i < count($dishes); $i++)
+            {
+                echo $dishes[$i];
+                $dish_name = $dishes[$i];
+                $dish_id = $conn->query("SELECT id FROM `products` WHERE `name` = '$dish_name'")->fetch_assoc()['id'];
+                $user_ingredients_result = $conn->query("SELECT ingredient_id FROM `orders_to_products_to_ingredients` WHERE `order_id` = '$order_id' AND `product_id` = '$dish_id'");
+                if ($user_ingredients_result->num_rows > 0)
+                {
+                    echo '<br>';
+                }
+                while ($row2 = $user_ingredients_result->fetch_assoc())
+                {
+                    $ingredient_id = $row2['ingredient_id'];
+                    $ingredient_name= $conn->query("SELECT name FROM `ingredients` WHERE `id` = '$ingredient_id'")->fetch_assoc()['name'];
+                    if ($conn->query("SELECT is_included FROM `products_to_ingredients` WHERE `product_id` = '$dish_id' AND `ingredient_id` = '$ingredient_id'")->fetch_assoc()['is_included'] == 1)
+                    {
+                        echo 'Убрать: ' . $ingredient_name;
+                    }
+                    else
+                    {
+                        echo 'Добавить: ' . $ingredient_name;
+                    }
+                }
+                if ($i < count($dishes) - 1)
+                {
+                    echo '<br>';
+                }
+                echo '<br>';
+            }
+            echo '</td>';
             echo '<td>'.$row['total_price']." RUB".'</td>';
             echo '<td>'.$row['deliveryman_first_name'].'</td>';
             echo '<td>'.$row['deliveryman_phone_number'].'</td>';
@@ -356,7 +455,40 @@ if ($_SESSION['id'] == ''): ?>
             echo '<tr>';
             echo '<td>'.$row['id'].'</td>';
             echo '<td>'.$row['order_time'].'</td>';
-            echo '<td>'.$row['dishes'].'</td>';
+            echo '<td>';
+
+            $order_id = $row['id'];
+            $dishes = explode("<br>", $row['dishes']);
+            for ($i = 0; $i < count($dishes); $i++)
+            {
+                echo $dishes[$i];
+                $dish_name = $dishes[$i];
+                $dish_id = $conn->query("SELECT id FROM `products` WHERE `name` = '$dish_name'")->fetch_assoc()['id'];
+                $user_ingredients_result = $conn->query("SELECT ingredient_id FROM `orders_to_products_to_ingredients` WHERE `order_id` = '$order_id' AND `product_id` = '$dish_id'");
+                if ($user_ingredients_result->num_rows > 0)
+                {
+                    echo '<br>';
+                }
+                while ($row2 = $user_ingredients_result->fetch_assoc())
+                {
+                    $ingredient_id = $row2['ingredient_id'];
+                    $ingredient_name= $conn->query("SELECT name FROM `ingredients` WHERE `id` = '$ingredient_id'")->fetch_assoc()['name'];
+                    if ($conn->query("SELECT is_included FROM `products_to_ingredients` WHERE `product_id` = '$dish_id' AND `ingredient_id` = '$ingredient_id'")->fetch_assoc()['is_included'] == 1)
+                    {
+                        echo 'Убрать: ' . $ingredient_name;
+                    }
+                    else
+                    {
+                        echo 'Добавить: ' . $ingredient_name;
+                    }
+                }
+                if ($i < count($dishes) - 1)
+                {
+                    echo '<br>';
+                }
+                echo '<br>';
+            }
+            echo '</td>';
 
 
             if ($row['status'] !== 'Утверждение курьера' && $row['status'] !== 'В доставке') {
