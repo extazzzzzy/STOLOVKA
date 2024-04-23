@@ -2,7 +2,7 @@
 session_start();
 $connectMySQL = new mysqli('localhost', 'root', 'root', 'stolovka');
 
-if (!isset($_SESSION['id']) || $_SESSION['role'] != "user") {
+if (!isset($_SESSION['id'])) {
     header("Location: auth.php");
     die();
 }

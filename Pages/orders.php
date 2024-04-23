@@ -64,7 +64,7 @@ if ($_SESSION['id'] == ''): ?>
     }
 
     $userID = $_SESSION['id'];
-    $sql = "SELECT o.id, o.address, o.status, o.delivery_time, 
+    $sql = "SELECT o.id, o.address, o.status, o.delivery_time, o.order_time,
                (SELECT first_name FROM users WHERE id = o.deliveryman_id) AS deliveryman_first_name, 
                (SELECT phone_number FROM users WHERE id = o.deliveryman_id) AS deliveryman_phone_number, 
                GROUP_CONCAT(p.name SEPARATOR '<br>') AS dishes, 
@@ -73,7 +73,8 @@ if ($_SESSION['id'] == ''): ?>
         LEFT JOIN orders_to_products otp ON o.id = otp.order_id
         LEFT JOIN products p ON otp.product_id = p.id
         WHERE o.user_id = $userID
-        GROUP BY o.id";
+        GROUP BY o.id
+        ORDER BY o.order_time DESC";
     $result = $conn->query($sql);
 
     if ($result->num_rows > 0) {
@@ -115,7 +116,6 @@ if ($_SESSION['id'] == ''): ?>
 
 
 
-
 <?php elseif ($_SESSION['role'] == 'manager'): ?>
     <?php
     $conn = new mysqli('localhost', 'root', 'root', 'stolovka');
@@ -133,7 +133,8 @@ if ($_SESSION['id'] == ''): ?>
         LEFT JOIN users u ON o.user_id = u.id
         LEFT JOIN orders_to_products otp ON o.id = otp.order_id
         LEFT JOIN products p ON otp.product_id = p.id
-        GROUP BY o.id";
+        GROUP BY o.id
+        ORDER BY o.order_time DESC";
     $result = $conn->query($sql);
 
     if ($result->num_rows > 0) {
@@ -161,7 +162,7 @@ if ($_SESSION['id'] == ''): ?>
             echo '<td>'.$row['first_name'].'</td>';
             echo '<td>'.$row['phone_number'].'</td>';
             echo '<td>'.$row['address'].'</td>';
-            if ($row['status'] === 'Доставлен') {
+            if ($row['status'] === 'Доставлен' || $row['status'] === 'Заказ отменен') {
                 echo '<td>'.$row['status'].'</td>';
             }
             else {
@@ -174,7 +175,7 @@ if ($_SESSION['id'] == ''): ?>
                 echo '<option value="В ожидании курьера" '.($row['status'] == 'В ожидании курьера' ? 'selected' : '').'>В ожидании курьера</option>';
                 echo '<option value="Утверждение курьера" '.($row['status'] == 'Утверждение курьера' ? 'selected' : '').'>Утверждение курьера</option>';
                 echo '<option value="В доставке" '.($row['status'] == 'В доставке' ? 'selected' : '').'>В доставке</option>';
-                echo '<option value="Доставлен" '.($row['status'] == 'Доставлен' ? 'selected' : '').'>Доставлен</option>';
+                echo '<option value="Проблема с покупателем!" '.($row['status'] == 'Проблема с покупателем!' ? 'selected' : '').'>Проблема с покупателем!</option>';
                 echo '<option value="Заказ отменен" '.($row['status'] == 'Заказ отменен' ? 'selected' : '').'>Заказ отменен</option>';
                 echo '</select>';
                 echo '<input type="hidden" name="order_id" value="'.$row['id'].'">';
@@ -219,8 +220,9 @@ if ($_SESSION['id'] == ''): ?>
         LEFT JOIN users u ON o.user_id = u.id
         LEFT JOIN orders_to_products otp ON o.id = otp.order_id
         LEFT JOIN products p ON otp.product_id = p.id
-        WHERE o.status IN ('На кухне', 'В ожидании курьера', 'В доставке', 'Утверждение курьера')
-        GROUP BY o.id";
+        WHERE o.status IN ('На кухне', 'В ожидании курьера', 'В доставке', 'Утверждение курьера', 'Проблема с покупателем!', 'Доставлен')
+        GROUP BY o.id
+        ORDER BY o.order_time DESC";
     $result = $conn->query($sql);
 
     if ($result->num_rows > 0) {
@@ -263,6 +265,25 @@ if ($_SESSION['id'] == ''): ?>
                 echo '<select name="status">';
                 echo '<option value="В доставке" '.($row['status'] == 'В доставке' ? 'selected' : '').'>В доставке</option>';
                 echo '<option value="Доставлен" '.($row['status'] == 'Доставлен' ? 'selected' : '').'>Доставлен</option>';
+                echo '</select>';
+                echo '<input type="hidden" name="order_id" value="'.$row['id'].'">';
+                echo '<input type="submit" name="submit" value="Сохранить">';
+                echo '</form>';
+
+                echo '<form method="post" action="../php/update_status.php">';
+                echo '<input type="hidden" name="order_id" value="'.$row['id'].'">';
+                echo '<input type="hidden" name="status" value="Проблема с покупателем!">';
+                echo '<input type="submit" name="submit" value="Проблема с покупателем!">';
+                echo '</form>';
+                echo '</td>';
+            }
+            else if ($row['status'] === 'Проблема с покупателем!') {
+                echo '<td>';
+                echo '<form method="post" action="../php/update_status.php">';
+                echo '<select name="status">';
+                echo '<option value="В доставке" '.($row['status'] == 'В доставке' ? 'selected' : '').'>В доставке</option>';
+                echo '<option value="Доставлен" '.($row['status'] == 'Доставлен' ? 'selected' : '').'>Доставлен</option>';
+                echo '<option value="Проблема с покупателем!" '.($row['status'] == 'Проблема с покупателем!' ? 'selected' : '').'>Проблема с покупателем!</option>';
                 echo '</select>';
                 echo '<input type="hidden" name="order_id" value="'.$row['id'].'">';
                 echo '<input type="submit" name="submit" value="Сохранить">';
@@ -312,7 +333,8 @@ if ($_SESSION['id'] == ''): ?>
         LEFT JOIN orders_to_products otp ON o.id = otp.order_id
         LEFT JOIN products p ON otp.product_id = p.id
         WHERE o.status IN ('Принят', 'На кухне', 'В ожидании курьера', 'В доставке', 'Утверждение курьера')
-        GROUP BY o.id";
+        GROUP BY o.id
+        ORDER BY o.order_time DESC";
     $result = $conn->query($sql);
 
     if ($result->num_rows > 0) {
