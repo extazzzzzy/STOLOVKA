@@ -6,6 +6,10 @@ if (!isset($_SESSION['id'])) {
     header("Location: auth.php");
     die();
 }
+elseif ($_SESSION['role'] == "manager"){
+    header("Location: catalog.php");
+    die;
+}
 
 $id = $_SESSION['id'];
 $role = $_SESSION['role'];

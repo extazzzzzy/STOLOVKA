@@ -1,8 +1,12 @@
+<?php
+session_start();
+?>
 <!DOCTYPE html>
 <html lang="ru">
 <head>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" />
     <meta charset="UTF-8">
+    <title>Каталог</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -13,6 +17,13 @@
             justify-content: center;
             align-items: center;
             height: 100vh;
+        }
+        input {
+            max-width: 150px;
+            background-color: #634E42;
+            border-style: solid;
+            border-color: transparent;
+            color: #F39200;
         }
         nav {
             position: fixed;
@@ -34,7 +45,6 @@
             background-color: #F39200;
             transition: background-color 0.3s ease, color 0.3s ease;
         }
-
         nav a:hover {
             background-color: #634E42;
             color: #F39200;
@@ -52,17 +62,12 @@
         .container::-webkit-scrollbar {
             width: 0;
         }
-        h1 {
-            text-align: center;
-            margin-bottom: 20px;
-        }
         .image-wrapper {
             position: relative;
             overflow: hidden;
             border-radius: 8px;
             box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
             margin-bottom: 20px;
-
         }
         .image-wrapper:hover .overlay {
             opacity: 1;
@@ -87,9 +92,13 @@
             transition: opacity 0.3s ease;
         }
         .overlay-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
             text-align: center;
             padding: 10px;
         }
+
         .overlay-content button {
             background-color: #634E42;
             color: #F39200;
@@ -118,16 +127,33 @@
         .img1 {
             max-width: 300px;
         }
+        select {
+            background-color: #634E42;
+            border-color: transparent;
+            border-style: solid;
+            color: #F39200;
+        }
     </style>
     <script>
-        function addToCart(form)
-        {
+        function removeIngredient(productId, ingredientId) {
+            var formData = new FormData();
+            formData.append('product_id', productId);
+            formData.append('ingredient_id', ingredientId);
+
+            var xhr = new XMLHttpRequest();
+            xhr.open('POST', '../php/delete_ingredients.php', true);
+            xhr.onload = function() {
+                if (xhr.status === 200) {
+                    location.reload();
+                }
+            };
+            xhr.send(formData);
+        }
+        function addToCart(form) {
             var productId = form.elements["product_id"].value;
             var checkedIngredients = [];
             var checkboxes = form.querySelectorAll('input[type="checkbox"]:checked');
             checkboxes.forEach(function(checkbox) {
-                console.log(checkbox.value);
-
                 checkedIngredients.push(checkbox.value);
             });
 
@@ -145,19 +171,15 @@
             return false;
         }
 
-        function countChanger()
-        {
+        function countChanger() {
             var formData = new FormData();
             var xhr = new XMLHttpRequest();
 
-            xhr.onload = function()
-            {
-                if (xhr.status === 200)
-                {
-                    document.getElementById('count').innerText = "Корзина " + xhr.responseText;
-                }
-                else
-                {
+            xhr.onload = function() {
+                if (xhr.status === 200) {
+                    console.log(document.getElementById('count').innerText)
+                    document.getElementById('count').innerText = "Корзина (" + xhr.responseText + ")";
+                } else {
                     console.error('Ошибка: ' + xhr.statusText);
                 }
             };
@@ -173,8 +195,7 @@
 <nav>
     <a href='orders.php'>Заказы</a>
     <?php
-    session_start();
-    $connectMySQL = new mysqli('localhost', 'root', 'root', 'Stolovka');
+    $connectMySQL = new mysqli('localhost', 'root', 'root', 'stolovka');
 
     $user_id = $_SESSION['id'];
     $result1 = $connectMySQL->query("SELECT * FROM carts_to_products WHERE user_id = '$user_id'");
@@ -182,48 +203,102 @@
 
     if ($_SESSION['role'] == "user") {
         echo "<a href='profile.php'>Профиль</a>";
-        echo "<a href='cart.php' id='count'>Корзина " . $count . "</a>";
+        echo "<a href='cart.php' id='count'>Корзина " . "(" . $count . ")" . "</a>";
     } elseif ($_SESSION['role'] == "manager") {
-        echo "<a href='profile.php'>Профиль</a>";
+        echo "<a href='add_new_product.php'>Добавление продукта</a>";
+        echo "<a href='../php/logout.php'>Выход</a>";
     }
     ?>
 </nav>
 <div class="container">
     <img class="img1" src="../images/STOLOVKA.png">
     <?php
-    $connectMySQL = new mysqli('localhost', 'root', 'root', 'Stolovka');
+    $connectMySQL = new mysqli('localhost', 'root', 'root', 'stolovka');
     $result = $connectMySQL->query("SELECT * FROM products");
-    while ($row = $result->fetch_assoc()) {
-        ?>
-        <div class="image-wrapper">
-            <img class="product" src="..<?php echo $row['image_src']; ?>" alt="Тут должно быть фото" data-fancybox="gallery">
-            <div class="overlay">
-                <div class="overlay-content">
-                    <br>
-                    <?php echo $row['name']; ?>
-                    <br>
-                    <?php echo $row['price'] . " руб."; ?>
-                    <br>
-                    <form action="../php/add_product.php" method="post" onsubmit="return addToCart(this);">
-                        <?php
-                        $temp = $row['id'];
-                        $result2 = $connectMySQL->query("SELECT ingredient_id, is_included FROM products_to_ingredients WHERE product_id = '$temp'");
-                        while ($row2 = $result2->fetch_assoc()) {
-                            $ingredient_id = $row2['ingredient_id'];
-                            $is_included = $row2['is_included'];
-                            $result3 = $connectMySQL->query("SELECT name FROM ingredients WHERE id = '$ingredient_id'");
-                            echo $result3->fetch_assoc()['name'];
-                            ?>
-                            <input type="checkbox" name="ingredients[]" value="<?php echo $ingredient_id; ?>" <?php echo ($is_included == 1 ? 'checked' : ''); ?>>
-                            <br>
-                        <?php } ?>
-                        <input type="hidden" name="product_id" value="<?php echo $row['id'] ?>">
-                        <button type="submit">Добавить в корзину</button>
-                    </form>
+
+    if ($_SESSION['role'] == "user") {
+        while ($row = $result->fetch_assoc()) {
+            ?>
+            <div class="image-wrapper">
+                <img class="product" src="..<?php echo $row['image_src']; ?>" alt="Тут должно быть фото" data-fancybox="gallery">
+                <div class="overlay">
+                    <div class="overlay-content">
+                        <br>
+                        <?php echo $row['name']; ?>
+                        <br>
+                        <?php echo $row['price'] . " руб."; ?>
+                        <br>
+                        <form action="../php/add_product.php" method="post" onsubmit="return addToCart(this);">
+                            <?php
+                            $temp = $row['id'];
+                            $result2 = $connectMySQL->query("SELECT ingredient_id, is_included FROM products_to_ingredients WHERE product_id = '$temp'");
+                            while ($row2 = $result2->fetch_assoc()) {
+                                $ingredient_id = $row2['ingredient_id'];
+                                $is_included = $row2['is_included'];
+                                $result3 = $connectMySQL->query("SELECT name FROM ingredients WHERE id = '$ingredient_id'");
+                                echo $result3->fetch_assoc()['name'];
+                                ?>
+                                <input type="checkbox" name="ingredients[]" value="<?php echo $ingredient_id; ?>" <?php echo ($is_included == 1 ? 'checked' : ''); ?>>
+                                <br>
+                            <?php } ?>
+                            <input type="hidden" name="product_id" value="<?php echo $row['id'] ?>">
+                            <button type="submit">Добавить в корзину</button>
+                        </form>
+                    </div>
                 </div>
             </div>
-        </div>
-        <?php
+            <?php
+        }
+    } elseif ($_SESSION['role'] == 'manager') {
+        while ($row = $result->fetch_assoc()) {
+            ?>
+            <div class="image-wrapper">
+                <img class="product" src="..<?php echo $row['image_src']; ?>" alt="Тут должно быть фото" data-fancybox="gallery">
+                <div class="overlay">
+                    <div class="overlay-content">
+                        <form action="../php/update_product_name.php" method="post">
+                            <input type="hidden" name="id" value="<?php echo $row['id']; ?>">
+                            Название: <input type="text" name="name" value="<?php echo $row['name']; ?>">
+                            <button type="submit">Ок</button>
+                        </form>
+                        <form action="../php/update_price.php" method="post">
+                            <input type="hidden" name="id" value="<?php echo $row['id']; ?>">
+                            Цена: <input type="text" name="price" value="<?php echo $row['price']; ?>">
+                            <button type="submit">Ок</button>
+                        </form>
+                        <form action="../php/update_image_src.php" method="post">
+                            <input type="hidden" name="id" value="<?php echo $row['id']; ?>">
+                            Путь к картинке: <input type="text" name="image_src" value="<?php echo $row['image_src']; ?>">
+                            <button type="submit">Ок</button>
+                        </form>
+                        <form action="../php/add_ingredients.php" method="post">
+                            <input type="hidden" name="product_id" value="<?php echo $row['id']; ?>">
+                            Новый ингредиент:
+                            <input type="text" name="new_ingredient_name">
+                            <button type="submit">Ок</button>
+                        </form>
+                        <form action="../php/delete_ingredients.php" method="post">
+                            <input type="hidden" name="product_id" value="<?php echo $row['id']; ?>">
+                            Удалить ингредиент:
+                            <select name="ingredient_id">
+                                <?php
+                                $ingredientsResult = $connectMySQL->query("SELECT * FROM ingredients INNER JOIN products_to_ingredients ON ingredients.id = products_to_ingredients.ingredient_id WHERE product_id = '{$row['id']}'");
+                                while ($ingredient = $ingredientsResult->fetch_assoc()) {
+                                    echo "<option value='" . $ingredient['ingredient_id'] . "'>" . $ingredient['name'] . "</option>";
+                                }
+                                ?>
+                            </select>
+                            <button type="submit">Ок</button>
+                        </form>
+                        <form action="../php/delete_product.php" method="post">
+                            <input type="hidden" name="id" value="<?php echo $row['id']; ?>">
+                            <button type="submit">Удалить продукт</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <?php
+        }
     }
     ?>
 </div>
