@@ -163,7 +163,7 @@ session_start();
 
             var xhr = new XMLHttpRequest();
 
-            xhr.open('POST', '../php/add_product.php', true);
+            xhr.open('POST', '../php/add_product_to_cart.php', true);
             xhr.send(formData);
 
             setTimeout(countChanger, 500);
@@ -228,7 +228,7 @@ session_start();
                         <br>
                         <?php echo $row['price'] . " руб."; ?>
                         <br>
-                        <form action="../php/add_product.php" method="post" onsubmit="return addToCart(this);">
+                        <form action="../php/add_product_to_cart.php" method="post" onsubmit="return addToCart(this);">
                             <?php
                             $temp = $row['id'];
                             $result2 = $connectMySQL->query("SELECT ingredient_id, is_included FROM products_to_ingredients WHERE product_id = '$temp'");
