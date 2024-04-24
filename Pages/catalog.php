@@ -304,6 +304,9 @@ if ($_SESSION['role'] == ""){
             <?php
         }
     }
+    else {
+        header("Location: profile.php");
+    }
     ?>
 </div>
 <script src="https://cdn.jsdelivr.net/npm/jquery@3.4.1/dist/jquery.min.js"></script>
