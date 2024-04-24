@@ -104,11 +104,11 @@ session_start();
         <h1>Авторизация</h1>
         <form action="../php/authorization.php" method="post">
             <input id="ph_num" maxlength="11" type="text" name="phone_number" placeholder="Введите номер телефона" required>
-            <input type="password" name="password" placeholder="Введите пароль" required>
+            <input type="password" maxlength="30" name="password" placeholder="Введите пароль" required>
             <div class="captcha">
                 <h3>Проверочный код</h3>
                 <img src="../php/captcha.php" alt="CAPTCHA"/>
-                <input type="text" name="captcha" placeholder="Введите код с картинки" required>
+                <input type="text" maxlength="5" name="captcha" placeholder="Введите код с картинки" required>
                 <input type="submit" value="Войти">
             </div>
         </form>

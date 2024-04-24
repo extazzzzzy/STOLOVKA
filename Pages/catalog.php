@@ -1,5 +1,9 @@
 <?php
 session_start();
+if ($_SESSION['role'] == ""){
+    header("Location: auth.php");
+    die;
+}
 ?>
 <!DOCTYPE html>
 <html lang="ru">

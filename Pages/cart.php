@@ -1,5 +1,11 @@
 <?php
 session_start();
+
+if ($_SESSION['role'] == ""){
+    header("Location: auth.php");
+    die;
+}
+
 $connectMySQL = new mysqli('localhost', 'root', 'root', 'Stolovka');
 
 echo '<div class="table_orders">';
@@ -75,3 +81,12 @@ echo '</table>';
 </script>
 
 <a href="making_an_order.php">Оформить заказ</a>
+
+<script>
+    var tdElements = document.querySelectorAll('.table_orders tbody td');
+    if (tdElements.length === 0) {
+        var orderLink = document.querySelector('a[href="making_an_order.php"]');
+        orderLink.style.pointerEvents = 'none';
+        orderLink.style.color = 'grey';
+    }
+</script>
