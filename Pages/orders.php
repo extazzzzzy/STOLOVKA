@@ -83,14 +83,18 @@ $_SESSION['isCart'] = "0";
 <body>
 <header>
     <nav>
-        <div><a href='profile.php'>Профиль</a></div>
+
         <?php
         if ($_SESSION['role'] == "user") {
+            echo "<div><a href='profile.php'>Профиль</a></div>";
             echo "<div><a href='catalog.php'>Каталог</a></div>";
             echo "<div><a href='cart.php'>Корзина</a></div>";
         }
         else if ($_SESSION['role'] == "manager") {
             echo "<div><a href='catalog.php'>Каталог</a></div>";
+        }
+        else {
+            echo "<div><a href='profile.php'>Профиль</a></div>";
         }
         ?>
     </nav>
