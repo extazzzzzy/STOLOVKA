@@ -24,7 +24,7 @@ $address = $connectMySQL->query("SELECT `address` FROM `users` WHERE `id` = '$id
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Страница пользователя</title>
+    <title>Профиль</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -151,7 +151,19 @@ $address = $connectMySQL->query("SELECT `address` FROM `users` WHERE `id` = '$id
         <div class="container_another">
             <h3>Телефон: <?php echo $phone_number; ?></h3>
             <h3>Адрес: <?php echo $address; ?></h3>
-            <h3>Роль: <?php echo $role; ?></h3>
+            <?php
+            if ($_SESSION['role'] == "user") {
+                echo '<h3>'."Покупатель".'</h3>';
+            } elseif ($_SESSION['role'] == "manager") {
+                echo '<h3>'."Менеджер".'</h3>';
+            }
+            elseif ($_SESSION['role'] == "deliveryman") {
+                echo '<h3>'."Курьер".'</h3>';
+            }
+            else {
+                echo '<h3>'."Кухня".'</h3>';
+            }
+            ?>
         </div>
 
         <form id="editForm" style="display: none;" action="../php/userDataChange.php" method="post">

@@ -8,21 +8,70 @@ session_start();
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Заказы</title>
     <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #634E42;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            height: 100vh;
+        }
+        input {
+            max-width: 150px;
+            background-color: #634E42;
+            border-style: solid;
+            border-color: transparent;
+            color: #F39200;
+        }
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            width: auto;
+            margin-top: 30px;
+            background-color: #634E42;
+            z-index: 1000;
+            text-align: center;
+
+            display: flex;
+            justify-content: center;
+        }
+        nav a:hover {
+            background-color: #634E42;
+            color: #F39200;
+        }
+        nav a {
+            color: #634E42;
+            text-decoration: none;
+
+            padding: 5px 10px;
+            border-radius: 5px;
+            background-color: #F39200;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+        a {
+            margin-right: 18px;
+        }
+
+
         table {
             border-collapse: collapse;
             width: 100%;
             margin-bottom: 20px;
-            margin-top: 10px;
+            margin-top: 70px;
         }
 
         th, td {
-            border: 1px solid #dddddd;
+            border: 1px solid black;
             text-align: left;
             padding: 8px;
+            background-color: #F39200;
         }
 
         th {
-            background-color: #f2f2f2;
+            background-color: #F39200;
         }
 
         tr:nth-child(even) {
@@ -36,18 +85,18 @@ session_start();
 </head>
 <body>
 <header>
-
-    <div><a href='profile.php'>Профиль</a></div>
-    <div><a href='orders.php'>Заказы</a></div>
-    <?php
-    if ($_SESSION['role'] == "user") {
-        echo "<div><a href='catalog.php'>Каталог</a></div>";
-        echo "<div><a href='cart.php'>Корзина</a></div>";
-    }
-    else if ($_SESSION['role'] == "manager") {
-        echo "<div><a href='catalog.php'>Каталог</a></div>";
-    }
-    ?>
+    <nav>
+        <div><a href='profile.php'>Профиль</a></div>
+        <?php
+        if ($_SESSION['role'] == "user") {
+            echo "<div><a href='catalog.php'>Каталог</a></div>";
+            echo "<div><a href='cart.php'>Корзина</a></div>";
+        }
+        else if ($_SESSION['role'] == "manager") {
+            echo "<div><a href='catalog.php'>Каталог</a></div>";
+        }
+        ?>
+    </nav>
 </header>
 <?php
 if ($_SESSION['id'] == ''): ?>

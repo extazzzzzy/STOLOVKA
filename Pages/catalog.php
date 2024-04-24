@@ -22,13 +22,6 @@ if ($_SESSION['role'] == ""){
             align-items: center;
             height: 100vh;
         }
-        input {
-            max-width: 150px;
-            background-color: #634E42;
-            border-style: solid;
-            border-color: transparent;
-            color: #F39200;
-        }
         nav {
             position: fixed;
             top: 0;
@@ -62,6 +55,7 @@ if ($_SESSION['role'] == ""){
             max-height: 80vh;
             justify-content: center;
             align-items: center;
+            margin-top: 30px;
         }
         .container::-webkit-scrollbar {
             width: 0;
@@ -216,6 +210,7 @@ if ($_SESSION['role'] == ""){
 </nav>
 <div class="container">
     <img class="img1" src="../images/STOLOVKA.png">
+    <h2>Меню</h2>
     <?php
     $connectMySQL = new mysqli('localhost', 'root', 'root', 'stolovka');
     $result = $connectMySQL->query("SELECT * FROM products");

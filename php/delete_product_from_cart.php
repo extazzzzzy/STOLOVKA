@@ -11,4 +11,6 @@ while ($row = $result->fetch_assoc())
     $connectMySQL->query("DELETE FROM `carts_to_products_to_ingredients` WHERE `user_id` = '$user_id' AND `product_id` = '$product_id'");
 }
 
+
+
 ?>
