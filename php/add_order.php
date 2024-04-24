@@ -5,7 +5,7 @@ $order_address = $_POST['order_add'];
 $delivery_time = $_POST['status'];
 $comment = $_POST['comment'];
 
-if ($delivery_time == "") {
+if ($delivery_time == "" || $delivery_time == "В настоящее время доставка недоступна") {
     echo "Произошла ошибка: Некорректное время";
     die();
 }

@@ -109,7 +109,7 @@ $_SESSION['isCart'] = "0";
             <div class="captcha">
                 <h3>Проверочный код</h3>
                 <img src="../php/captcha.php" alt="CAPTCHA"/>
-                <input type="text" maxlength="5" name="captcha" placeholder="Введите код с картинки" required>
+                <input type="text" id="captcha" maxlength="5" name="captcha" placeholder="Введите код с картинки" required>
                 <input type="submit" value="Войти">
             </div>
         </form>
@@ -124,6 +124,18 @@ $_SESSION['isCart'] = "0";
         } else {
             e.preventDefault();
         }
+        });
+
+        let captchaInput = document.getElementById('captcha');
+        captchaInput.addEventListener('input', function(event) {
+            let inputValue = event.target.value;
+            for (let i = 0; i < inputValue.length; i++) {
+                if (!(/[a-zA-Z]/.test(inputValue[i]))) {
+                    inputValue = inputValue.slice(0, i) + inputValue.slice(i + 1);
+                    captchaInput.value = inputValue;
+                    break;
+                }
+            }
         });
     </script>
 </body>

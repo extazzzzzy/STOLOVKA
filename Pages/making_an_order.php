@@ -33,7 +33,7 @@ function set_deliv_Time($hour, $time_order) {
             echo date('H:i:s', strtotime("+$hour hour", $time_order));  //проверка на часы работы ^
     }
     else if ($hour == 0)
-        echo "В настоящее время срочная доставка недоступна";
+        echo "В настоящее время доставка недоступна";
 }
 
 ?>
@@ -151,7 +151,7 @@ function set_deliv_Time($hour, $time_order) {
         <div class="container_another">
             <form id="orderForm" action="../php/add_order.php" method="post">
                 <h3>Укажите адрес доставки</h3>
-                <input type="text" name="order_add" placeholder="Введите адрес доставки" value="<?php echo $address; ?>"><br>
+                <input type="text" name="order_add" maxlength="100" id="address" required placeholder="Введите адрес доставки" value="<?php echo $address; ?>"><br>
                 <h3>Когда вам доставить заказ?</h3>
                 <select name="status">
                     <option><?php set_deliv_Time(0, $time_order) ?></option>
@@ -163,12 +163,26 @@ function set_deliv_Time($hour, $time_order) {
                     <option class='option_visib' value="<?php set_deliv_Time(6, $time_order) ?>"><?php set_deliv_Time(6, $time_order) ?></option>
                 </select><br>
                 <h3>Поле для ваших пожеланий</h3>
-                <input type="text" name="comment" placeholder="Напишите что-нибудь :-)" value=""><br>
+                <input type="text" name="comment" maxlength="200" placeholder="Напишите что-нибудь :-)" value=""><br>
                 <input type="submit" name="order_send_btn" value="Оформить заказ">
             </form>
         </div>
     </div>
 </footer>
+
+<script>
+    let addressInput = document.getElementById('address');
+    addressInput.addEventListener('input', function(event) {
+        let inputValue = event.target.value;
+        for (let i = 0; i < inputValue.length; i++) {
+            if (!(/[а-яА-Я0-9\s,.-]/.test(inputValue[i]))) {
+                inputValue = inputValue.slice(0, i) + inputValue.slice(i + 1);
+                addressInput.value = inputValue;
+                break;
+            }
+        }
+    });
+</script>
 </body>
 </html>
 

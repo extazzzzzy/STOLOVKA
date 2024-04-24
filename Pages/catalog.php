@@ -258,12 +258,12 @@ if ($_SESSION['role'] == ""){
                     <div class="overlay-content">
                         <form action="../php/update_product_name.php" method="post">
                             <input type="hidden" name="id" value="<?php echo $row['id']; ?>">
-                            Название: <input type="text" name="name" value="<?php echo $row['name']; ?>">
+                            Название: <input id="name_products" type="text" maxlength="50" name="name" value="<?php echo $row['name']; ?>">
                             <button type="submit">Ок</button>
                         </form>
                         <form action="../php/update_price.php" method="post">
                             <input type="hidden" name="id" value="<?php echo $row['id']; ?>">
-                            Цена: <input type="text" name="price" value="<?php echo $row['price']; ?>">
+                            Цена: <input type="text" id="price" maxlength="11" name="price" value="<?php echo $row['price']; ?>">
                             <button type="submit">Ок</button>
                         </form>
                         <form action="../php/update_image_src.php" method="post" enctype="multipart/form-data">
@@ -274,7 +274,7 @@ if ($_SESSION['role'] == ""){
                         <form action="../php/add_ingredients.php" method="post">
                             <input type="hidden" name="product_id" value="<?php echo $row['id']; ?>">
                             Новый ингредиент:
-                            <input type="text" name="new_ingredient_name">
+                            <input maxlength="30" id="ingredient" type="text" name="new_ingredient_name">
                             <button type="submit">Ок</button>
                         </form>
                         <form action="../php/delete_ingredients.php" method="post">
@@ -305,6 +305,40 @@ if ($_SESSION['role'] == ""){
     }
     ?>
 </div>
+<script>
+    let price = document.getElementById('price');
+    price.addEventListener('keydown', (e) => {
+        if(['0','1','2','3','4', '5', '6', '7', '8', '9', 'Backspace', 'ControlLeft', 'Delete'].indexOf(e.key) !== -1){
+
+        } else {
+            e.preventDefault();
+        }
+    });
+
+    let nameProductsInput = document.getElementById('name_products');
+    nameProductsInput.addEventListener('input', function(event) {
+        let inputValue = event.target.value;
+        for (let i = 0; i < inputValue.length; i++) {
+            if (!(/[а-яА-ЯёЁ]/.test(inputValue[i]))) {
+                inputValue = inputValue.slice(0, i) + inputValue.slice(i + 1);
+                nameProductsInput.value = inputValue;
+                break;
+            }
+        }
+    });
+
+    let ingredientInput = document.getElementById('ingredient');
+    ingredientInput.addEventListener('input', function(event) {
+        let inputValue = event.target.value;
+        for (let i = 0; i < inputValue.length; i++) {
+            if (!(/[а-яА-ЯёЁ]/.test(inputValue[i]))) {
+                inputValue = inputValue.slice(0, i) + inputValue.slice(i + 1);
+                ingredientInput.value = inputValue;
+                break;
+            }
+        }
+    });
+</script>
 <script src="https://cdn.jsdelivr.net/npm/jquery@3.4.1/dist/jquery.min.js"></script>
 <script src="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js"></script>
 </body>

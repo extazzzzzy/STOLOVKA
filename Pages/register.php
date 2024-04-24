@@ -94,10 +94,10 @@ $_SESSION['isCart'] = "0";
     <img src="../images/STOLOVKA.png">
     <h1>Регистрация</h1>
     <form action="../php/registration.php" method="post">
-        <input type="text" maxlength="30" name="first_name" placeholder="Введите имя" required>
+        <input type="text" maxlength="30" id="name" name="first_name" placeholder="Введите имя" required>
         <input type="text" id="ph_num" maxlength="11" name="phone_number" placeholder="Введите номер телефона" required>
-        <input type="password" maxlength="30" name="password" placeholder="Введите пароль" required>
-        <input type="text" maxlength="100" name="address" placeholder="Введите адрес" required>
+        <input type="password" maxlength="30" minlength="6" name="password" placeholder="Введите пароль" required>
+        <input type="text" maxlength="100" name="address" id="address" placeholder="Введите адрес" required>
         <input type="submit" name="submit" value="Отправить">
     </form>
     <a href="auth.php">Уже есть аккаунт</a>
@@ -106,12 +106,35 @@ $_SESSION['isCart'] = "0";
 
 <script>
     let phone_number = document.getElementById('ph_num');
-
     phone_number.addEventListener('keydown', (e) => {
         if(['0','1','2','3','4', '5', '6', '7', '8', '9', 'Backspace', 'ControlLeft', 'Delete'].indexOf(e.key) !== -1){
 
         } else {
             e.preventDefault();
+        }
+    });
+
+    let nameInput = document.getElementById('name');
+    nameInput.addEventListener('input', function(event) {
+        let inputValue = event.target.value;
+        for (let i = 0; i < inputValue.length; i++) {
+            if (!(/[а-яА-ЯёЁ]/.test(inputValue[i]))) {
+                inputValue = inputValue.slice(0, i) + inputValue.slice(i + 1);
+                nameInput.value = inputValue;
+                break;
+            }
+        }
+    });
+
+    let addressInput = document.getElementById('address');
+    addressInput.addEventListener('input', function(event) {
+        let inputValue = event.target.value;
+        for (let i = 0; i < inputValue.length; i++) {
+            if (!(/[а-яА-Я0-9\s,.-]/.test(inputValue[i]))) {
+                inputValue = inputValue.slice(0, i) + inputValue.slice(i + 1);
+                addressInput.value = inputValue;
+                break;
+            }
         }
     });
 </script>

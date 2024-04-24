@@ -168,8 +168,8 @@ $address = $connectMySQL->query("SELECT `address` FROM `users` WHERE `id` = '$id
         </div>
 
         <form id="editForm" style="display: none;" action="../php/userDataChange.php" method="post">
-            <input type="text" name="edit_f_name" style="margin-bottom: 5px;" value="<?php echo $username; ?>"><br>
-            <input type="text" name="edit_add" style="margin-bottom: 5px;" value="<?php echo $address; ?>"><br>
+            <input type="text" maxlength="30" name="edit_f_name" id="name" style="margin-bottom: 5px;" value="<?php echo $username; ?>"><br>
+            <input type="text" maxlength="100" id="address" name="edit_add" style="margin-bottom: 5px;" value="<?php echo $address; ?>"><br>
             <input type="submit" name="edit_btn" style="margin-bottom: 5px;" value="Внести изменения">
         </form>
         <div style="margin-bottom: 5px; display: flex; justify-content: center;">
@@ -190,5 +190,29 @@ $address = $connectMySQL->query("SELECT `address` FROM `users` WHERE `id` = '$id
         }
     </script>
 </footer>
+<script>
+    let addressInput = document.getElementById('address');
+    addressInput.addEventListener('input', function(event) {
+        let inputValue = event.target.value;
+        for (let i = 0; i < inputValue.length; i++) {
+            if (!(/[а-яА-Я0-9\s,.-]/.test(inputValue[i]))) {
+                inputValue = inputValue.slice(0, i) + inputValue.slice(i + 1);
+                addressInput.value = inputValue;
+                break;
+            }
+        }
+    });
+    let nameInput = document.getElementById('name');
+    nameInput.addEventListener('input', function(event) {
+        let inputValue = event.target.value;
+        for (let i = 0; i < inputValue.length; i++) {
+            if (!(/[а-яА-ЯёЁ]/.test(inputValue[i]))) {
+                inputValue = inputValue.slice(0, i) + inputValue.slice(i + 1);
+                nameInput.value = inputValue;
+                break;
+            }
+        }
+    });
+</script>
 </body>
 </html>

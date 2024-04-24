@@ -15,6 +15,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $price = $_POST["price"];
     $image_src = $_POST["image_src"];
 
+    if ($price == 0) {
+        echo "Проверьте правильность ввода цены";
+        die();
+    }
+
     $file_name = $_FILES["image"]["name"];
     $path = "/images/products/" . $file_name;
     $image_extension = (pathinfo($path,PATHINFO_EXTENSION));

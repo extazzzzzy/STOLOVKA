@@ -118,11 +118,11 @@ if ($_SESSION['role'] != "manager"){
     <form action="../php/insert_product.php" method="post" enctype="multipart/form-data">
         <div class="form-group">
             <label for="name">Название продукта:</label>
-            <input type="text" id="name" name="name" required>
+            <input type="text" maxlength="50" id="name" name="name" required>
         </div>
         <div class="form-group">
             <label for="price">Цена продукта:</label>
-            <input type="text" id="price" name="price" required>
+            <input type="text" id="price" maxlength="11" name="price" required>
         </div>
         <div class="form-group">
             <label for="image">Загрузить изображение:</label>
@@ -137,4 +137,27 @@ if ($_SESSION['role'] != "manager"){
     </nav>
 </div>
 </body>
+<script>
+    let price = document.getElementById('price');
+    price.addEventListener('keydown', (e) => {
+        if(['0','1','2','3','4', '5', '6', '7', '8', '9', 'Backspace', 'ControlLeft', 'Delete'].indexOf(e.key) !== -1){
+
+        } else {
+            e.preventDefault();
+        }
+    });
+
+    let nameProductsInput = document.getElementById('name');
+    nameProductsInput.addEventListener('input', function(event) {
+        let inputValue = event.target.value;
+        for (let i = 0; i < inputValue.length; i++) {
+            if (!(/[а-яА-ЯёЁ]/.test(inputValue[i]))) {
+                inputValue = inputValue.slice(0, i) + inputValue.slice(i + 1);
+                nameProductsInput.value = inputValue;
+                break;
+            }
+        }
+    });
+
+</script>
 </html>

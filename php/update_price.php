@@ -9,9 +9,15 @@ if ($mysql->connect_errno) {
     exit("Ошибка подключения к базе данных: " . $mysql->connect_error);
 }
 
+$price = $_POST["price"];
+if ($price == 0) {
+    echo "Проверьте правильность ввода цены";
+    die();
+}
+
 if (isset($_POST["id"]) && isset($_POST["price"])) {
     $id = $_POST["id"];
-    $price = $_POST["price"];
+
 
     $sql = "UPDATE products SET price = '$price' WHERE id = '$id'";
 
