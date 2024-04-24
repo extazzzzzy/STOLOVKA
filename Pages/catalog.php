@@ -270,9 +270,9 @@ if ($_SESSION['role'] == ""){
                             Цена: <input type="text" name="price" value="<?php echo $row['price']; ?>">
                             <button type="submit">Ок</button>
                         </form>
-                        <form action="../php/update_image_src.php" method="post">
+                        <form action="../php/update_image_src.php" method="post" enctype="multipart/form-data">
                             <input type="hidden" name="id" value="<?php echo $row['id']; ?>">
-                            Путь к картинке: <input type="text" name="image_src" value="<?php echo $row['image_src']; ?>">
+                            Путь к картинке: <input type="file" name="image">
                             <button type="submit">Ок</button>
                         </form>
                         <form action="../php/add_ingredients.php" method="post">
