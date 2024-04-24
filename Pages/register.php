@@ -1,3 +1,10 @@
+<?php
+session_start();
+$_SESSION['isCart'] = "0";
+?>
+<?php if ($_SESSION['id'] != ''): ?>
+    <meta http-equiv="refresh" content="0; url=../Pages/profile.php"/>
+<?php endif?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -96,6 +103,7 @@
     <a href="auth.php">Уже есть аккаунт</a>
 </div>
 
+
 <script>
     let phone_number = document.getElementById('ph_num');
 
@@ -107,5 +115,6 @@
         }
     });
 </script>
+
 </body>
 </html>

@@ -1,5 +1,6 @@
 <?php
 session_start();
+$_SESSION['isCart'] = "0";
 $connectMySQL = new mysqli('localhost', 'root', 'root', 'stolovka');
 if ($_SESSION['role'] != "manager"){
     header("Location: auth.php");

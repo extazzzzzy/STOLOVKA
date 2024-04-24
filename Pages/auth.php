@@ -1,5 +1,6 @@
 <?php
 session_start();
+$_SESSION['isCart'] = "0";
 ?>
 <?php if ($_SESSION['id'] != ''): ?>
     <meta http-equiv="refresh" content="0; url=../Pages/profile.php"/>

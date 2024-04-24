@@ -6,6 +6,10 @@ if (!isset($_SESSION['id']) || $_SESSION['role'] != "user") {
     header("Location: auth.php");
     die();
 }
+else if ($_SESSION['isCart'] == "0") {
+    header("Location: catalog.php");
+    die();
+}
 $id = $_SESSION['id'];
 
 $address = $connectMySQL->query("SELECT `address` FROM `users` WHERE `id` = '$id'")->fetch_assoc()['address'];

@@ -1,5 +1,6 @@
 <?php
 session_start();
+$_SESSION['isCart'] = "0";
 if ($_SESSION['role'] == ""){
     header("Location: auth.php");
     die;

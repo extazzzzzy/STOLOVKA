@@ -125,6 +125,7 @@ $products_count = $connectMySQL->query("SELECT COUNT(product_id) as count FROM `
 $row = $products_count->fetch_assoc();
 $product_count = $row['count'];
 if ($product_count > 0) {
+    $_SESSION['isCart'] = "1";
     echo '<div class="table_orders">';
     echo '<table>';
     echo '<thead>';
@@ -176,6 +177,7 @@ if ($product_count > 0) {
     echo '</div>';
 }
 else {
+    $_SESSION['isCart'] = "0";
     echo '<h2 style="margin-top: 70px">'."Корзина пустая".'</h2>';
 }
 
