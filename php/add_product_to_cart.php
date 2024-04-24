@@ -6,7 +6,7 @@ $checked_ingredients = json_decode($_POST['checked_ingredients'], true);
 
 
 $connectMySQL = new mysqli('localhost', 'root', 'root', 'Stolovka');
-if ($connectMySQL->query("SELECT * FROM `carts_to_products` WHERE `product_id` = '$product_id'")->num_rows == 0)
+if ($connectMySQL->query("SELECT * FROM `carts_to_products` WHERE `product_id` = '$product_id' AND `user_id` = '$user_id'")->num_rows == 0)
 {
     $connectMySQL->query("INSERT INTO `carts_to_products` (`user_id`, `product_id`) VALUES ('$user_id', '$product_id')");
 

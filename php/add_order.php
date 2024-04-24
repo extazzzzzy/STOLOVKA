@@ -26,8 +26,8 @@ while ($row = $products_result->fetch_assoc()) {
     }
 }
 
-$connectMySQL->query("DELETE FROM `carts_to_products`");
-$connectMySQL->query("DELETE FROM `carts_to_products_to_ingredients`");
+$connectMySQL->query("DELETE FROM `carts_to_products` WHERE `user_id` = '$user_id' ");
+$connectMySQL->query("DELETE FROM `carts_to_products_to_ingredients` WHERE `user_id` = '$user_id'");
 
 
 header("Location: ../pages/orders.php");
