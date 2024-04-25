@@ -43,6 +43,8 @@ function set_deliv_Time($hour, $time_order) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="../images/favicon.ico" type="image/x-icon">
+    <link rel="shortcut icon" href="../images/favicon.ico" type="image/x-icon">
     <title>Оформление заказа</title>
     <style>
         body {

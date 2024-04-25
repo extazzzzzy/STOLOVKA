@@ -9,6 +9,8 @@ if ($_SESSION['role'] == ""){
 <!DOCTYPE html>
 <html lang="ru">
 <head>
+    <link rel="icon" href="../images/favicon.ico" type="image/x-icon">
+    <link rel="shortcut icon" href="../images/favicon.ico" type="image/x-icon">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" />
     <meta charset="UTF-8">
     <title>Каталог</title>
@@ -73,8 +75,8 @@ if ($_SESSION['role'] == ""){
         }
         .product {
             display: block;
-            width: 400px;
-            max-height: 300px;
+            width: 420px;
+            max-height: 400px;
         }
         .overlay {
             position: absolute;
@@ -258,23 +260,25 @@ if ($_SESSION['role'] == ""){
                     <div class="overlay-content">
                         <form action="../php/update_product_name.php" method="post">
                             <input type="hidden" name="id" value="<?php echo $row['id']; ?>">
-                            Название: <input id="name_products" type="text" maxlength="50" name="name" value="<?php echo $row['name']; ?>">
+                            Название: <input id="name_products" required type="text" maxlength="50" name="name" value="<?php echo $row['name']; ?>">
                             <button type="submit">Ок</button>
                         </form>
                         <form action="../php/update_price.php" method="post">
                             <input type="hidden" name="id" value="<?php echo $row['id']; ?>">
-                            Цена: <input type="text" id="price" maxlength="11" name="price" value="<?php echo $row['price']; ?>">
+                            Цена: <input type="text" required id="price" maxlength="11" name="price" value="<?php echo $row['price']; ?>">
                             <button type="submit">Ок</button>
                         </form>
                         <form action="../php/update_image_src.php" method="post" enctype="multipart/form-data">
                             <input type="hidden" name="id" value="<?php echo $row['id']; ?>">
-                            Путь к картинке: <input type="file" name="image">
+                            Путь к картинке: <input required type="file" name="image">
                             <button type="submit">Ок</button>
                         </form>
                         <form action="../php/add_ingredients.php" method="post">
                             <input type="hidden" name="product_id" value="<?php echo $row['id']; ?>">
                             Новый ингредиент:
-                            <input maxlength="30" id="ingredient" type="text" name="new_ingredient_name">
+                            <input maxlength="30" id="ingredient" type="text" name="new_ingredient_name" required>
+                            Изначально в блюде?
+                            <input placeholder="Да/Нет" maxlength="3" id="isStart" type="text" name="isStart" required>
                             <button type="submit">Ок</button>
                         </form>
                         <form action="../php/delete_ingredients.php" method="post">

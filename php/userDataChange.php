@@ -1,6 +1,6 @@
 <?php
     session_start();
-
+try {
     $name = $_POST['edit_f_name'];
     $address = $_POST['edit_add'];
     $id = $_SESSION['id'];
@@ -11,7 +11,11 @@
     $query = $connectMySQL -> prepare($sql_query);
     $query -> bind_param("ssi", $name, $address, $id);
     $query->execute();
-    
+
     header("Location: ../Pages/profile.php");
     die();
+}
+catch (Exception $e) {
+    echo "Ошибка получения данных!";
+}
 ?>

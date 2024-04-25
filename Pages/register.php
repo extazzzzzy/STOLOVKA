@@ -9,6 +9,8 @@ $_SESSION['isCart'] = "0";
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <link rel="icon" href="../images/favicon.ico" type="image/x-icon">
+    <link rel="shortcut icon" href="../images/favicon.ico" type="image/x-icon">
     <title>Регистрация</title>
     <style>
         body {
