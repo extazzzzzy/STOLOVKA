@@ -345,5 +345,18 @@ if ($_SESSION['role'] == ""){
 </script>
 <script src="https://cdn.jsdelivr.net/npm/jquery@3.4.1/dist/jquery.min.js"></script>
 <script src="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script>
+    function refreshOrders() {
+        $.ajax({
+            url: '../php/sync_update_product_in_catalog.php',
+            type: 'POST',
+            success: function(data) {
+                $('.container').html(data);
+            }
+        });
+    }
+    setInterval(refreshOrders, 15000);
+</script>
 </body>
 </html>

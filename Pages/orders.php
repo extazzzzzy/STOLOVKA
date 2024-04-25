@@ -613,3 +613,20 @@ elseif ($_SESSION['role'] == 'cook'):
     }
 endif;
 ?>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script>
+    function refreshOrders() {
+        $.ajax({
+            url: '../php/sync_update_orders.php',
+            type: 'POST',
+            success: function(data) {
+                $('.table_orders tbody').html(data);
+            }
+        });
+    }
+    setInterval(refreshOrders, 5000);
+</script>
+
+</body>
+
