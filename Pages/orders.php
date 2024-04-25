@@ -95,6 +95,9 @@ $_SESSION['isCart'] = "0";
         else if ($_SESSION['role'] == "manager") {
             echo "<div><a href='catalog.php'>Каталог</a></div>";
         }
+        else if  ($_SESSION['role'] == "cook"){
+            echo "<div><a href='../php/logout.php'>Выход</a></div>";
+        }
         else {
             echo "<div><a href='profile.php'>Профиль</a></div>";
         }
@@ -250,14 +253,20 @@ if ($result->num_rows > 0) {
         <tbody>
         <?php while($row = $result->fetch_assoc()) { ?>
             <tr>
-                <td <?php if ($row['status'] === 'Проблема с покупателем!') echo 'style="background-color: #d36e70;"'; ?>><?= $row['id'] ?></td>
-                <td <?php if ($row['status'] === 'Проблема с покупателем!') echo 'style="background-color: #d36e70;"'; ?>><?= $row['first_name'] ?></td>
-                <td <?php if ($row['status'] === 'Проблема с покупателем!') echo 'style="background-color: #d36e70;"'; ?>><?= $row['phone_number'] ?></td>
-                <td <?php if ($row['status'] === 'Проблема с покупателем!') echo 'style="background-color: #d36e70;"'; ?>><?= $row['address'] ?></td>
+                <td <?php if ($row['status'] === 'Проблема с покупателем!') echo 'style="background-color: #d36e70;"'; ?>
+                    <?php if ($row['status'] === 'Доставлен') echo 'style="background-color: #70d375;"'; ?>><?= $row['id'] ?></td>
+                <td <?php if ($row['status'] === 'Проблема с покупателем!') echo 'style="background-color: #d36e70;"'; ?>
+                    <?php if ($row['status'] === 'Доставлен') echo 'style="background-color: #70d375;"'; ?>><?= $row['first_name'] ?></td>
+                <td <?php if ($row['status'] === 'Проблема с покупателем!') echo 'style="background-color: #d36e70;"'; ?>
+                    <?php if ($row['status'] === 'Доставлен') echo 'style="background-color: #70d375;"'; ?>><?= $row['phone_number'] ?></td>
+                <td <?php if ($row['status'] === 'Проблема с покупателем!') echo 'style="background-color: #d36e70;"'; ?>
+                    <?php if ($row['status'] === 'Доставлен') echo 'style="background-color: #70d375;"'; ?>><?= $row['address'] ?></td>
                 <?php if ($row['status'] === 'Доставлен' || $row['status'] === 'Заказ отменен') { ?>
-                    <td <?php if ($row['status'] === 'Проблема с покупателем!') echo 'style="background-color: #d36e70;"'; ?>><?= $row['status'] ?></td>
+                    <td <?php if ($row['status'] === 'Проблема с покупателем!') echo 'style="background-color: #d36e70;"'; ?>
+                        <?php if ($row['status'] === 'Доставлен') echo 'style="background-color: #70d375;"'; ?>><?= $row['status'] ?></td>
                 <?php } else { ?>
-                    <td <?php if ($row['status'] === 'Проблема с покупателем!') echo 'style="background-color: #d36e70;"'; ?>>
+                    <td <?php if ($row['status'] === 'Проблема с покупателем!') echo 'style="background-color: #d36e70;"'; ?>
+                        <?php if ($row['status'] === 'Доставлен') echo 'style="background-color: #70d375;"'; ?>>
                         <form method="post" action="../php/update_status.php">
                             <select name="status">
                                 <option value="Ожидает рассмотрения" <?= ($row['status'] == 'Ожидает рассмотрения' ? 'selected' : '') ?>>Ожидает рассмотрения</option>
@@ -274,9 +283,12 @@ if ($result->num_rows > 0) {
                         </form>
                     </td>
                 <?php } ?>
-                <td <?php if ($row['status'] === 'Проблема с покупателем!') echo 'style="background-color: #d36e70;"'; ?>><?= $row['delivery_time'] ?></td>
-                <td <?php if ($row['status'] === 'Проблема с покупателем!') echo 'style="background-color: #d36e70;"'; ?>><?= $row['order_time'] ?></td>
-                <td <?php if ($row['status'] === 'Проблема с покупателем!') echo 'style="background-color: #d36e70;"'; ?>>
+                <td <?php if ($row['status'] === 'Проблема с покупателем!') echo 'style="background-color: #d36e70;"'; ?>
+                    <?php if ($row['status'] === 'Доставлен') echo 'style="background-color: #70d375;"'; ?>><?= $row['delivery_time'] ?></td>
+                <td <?php if ($row['status'] === 'Проблема с покупателем!') echo 'style="background-color: #d36e70;"'; ?>
+                    <?php if ($row['status'] === 'Доставлен') echo 'style="background-color: #70d375;"'; ?>><?= $row['order_time'] ?></td>
+                <td <?php if ($row['status'] === 'Проблема с покупателем!') echo 'style="background-color: #d36e70;"'; ?>
+                    <?php if ($row['status'] === 'Доставлен') echo 'style="background-color: #70d375;"'; ?>>
                     <?php
                     $order_id = $row['id'];
                     $dishes = explode("<br>", $row['dishes']);
@@ -308,10 +320,14 @@ if ($result->num_rows > 0) {
                     }
                     ?>
                 </td>
-                <td <?php if ($row['status'] === 'Проблема с покупателем!') echo 'style="background-color: #d36e70;"'; ?>><?= $row['comment'] ?></td>
-                <td <?php if ($row['status'] === 'Проблема с покупателем!') echo 'style="background-color: #d36e70;"'; ?>><?= $row['total_price'] ?> RUB</td>
-                <td <?php if ($row['status'] === 'Проблема с покупателем!') echo 'style="background-color: #d36e70;"'; ?>><?= $row['deliveryman_first_name'] ?></td>
-                <td <?php if ($row['status'] === 'Проблема с покупателем!') echo 'style="background-color: #d36e70;"'; ?>><?= $row['deliveryman_phone_number'] ?></td>
+                <td <?php if ($row['status'] === 'Проблема с покупателем!') echo 'style="background-color: #d36e70;"'; ?>
+                    <?php if ($row['status'] === 'Доставлен') echo 'style="background-color: #70d375;"'; ?>><?= $row['comment'] ?></td>
+                <td <?php if ($row['status'] === 'Проблема с покупателем!') echo 'style="background-color: #d36e70;"'; ?>
+                    <?php if ($row['status'] === 'Доставлен') echo 'style="background-color: #70d375;"'; ?>><?= $row['total_price'] ?> RUB</td>
+                <td <?php if ($row['status'] === 'Проблема с покупателем!') echo 'style="background-color: #d36e70;"'; ?>
+                    <?php if ($row['status'] === 'Доставлен') echo 'style="background-color: #70d375;"'; ?>><?= $row['deliveryman_first_name'] ?></td>
+                <td <?php if ($row['status'] === 'Проблема с покупателем!') echo 'style="background-color: #d36e70;"'; ?>
+                    <?php if ($row['status'] === 'Доставлен') echo 'style="background-color: #70d375;"'; ?>><?= $row['deliveryman_phone_number'] ?></td>
             </tr>
         <?php } ?>
         </tbody>
@@ -380,19 +396,19 @@ if ($_SESSION['role'] == 'deliveryman'):
                     <tbody>
                     <?php while ($row = $result->fetch_assoc()): ?>
                         <tr>
-                            <td><?php echo $row['id']; ?></td>
-                            <td><?php echo $row['first_name']; ?></td>
-                            <td><?php echo $row['phone_number']; ?></td>
-                            <td><?php echo $row['address']; ?></td>
+                            <td <?php if ($row['status'] === 'Доставлен') echo 'style="background-color: #70d375;"'; ?>><?php echo $row['id']; ?></td>
+                            <td <?php if ($row['status'] === 'Доставлен') echo 'style="background-color: #70d375;"'; ?>><?php echo $row['first_name']; ?></td>
+                            <td <?php if ($row['status'] === 'Доставлен') echo 'style="background-color: #70d375;"'; ?>><?php echo $row['phone_number']; ?></td>
+                            <td <?php if ($row['status'] === 'Доставлен') echo 'style="background-color: #70d375;"'; ?>><?php echo $row['address']; ?></td>
                             <?php if ($row['status'] === 'В ожидании курьера'): ?>
-                                <td>
+                                <td <?php if ($row['status'] === 'Доставлен') echo 'style="background-color: #70d375;"'; ?>>
                                     <form method="post" action="../php/take_order.php">
                                         <input type="hidden" name="order_id" value="<?php echo $row['id']; ?>">
                                         <input type="submit" name="take_order" value="Взять заказ">
                                     </form>
                                 </td>
                             <?php elseif ($row['status'] === 'В доставке'): ?>
-                                <td>
+                                <td <?php if ($row['status'] === 'Доставлен') echo 'style="background-color: #70d375;"'; ?>>
                                     <form method="post" action="../php/update_status.php">
                                         <select name="status">
                                             <option value="В доставке" <?php echo ($row['status'] == 'В доставке' ? 'selected' : ''); ?>>В доставке</option>
@@ -409,7 +425,7 @@ if ($_SESSION['role'] == 'deliveryman'):
                                     </form>
                                 </td>
                             <?php elseif ($row['status'] === 'Проблема с покупателем!'): ?>
-                                <td>
+                                <td <?php if ($row['status'] === 'Доставлен') echo 'style="background-color: #70d375;"'; ?>>
                                     <form method="post" action="../php/update_status.php">
                                         <select name="status">
                                             <option value="В доставке" <?php echo ($row['status'] == 'В доставке' ? 'selected' : ''); ?>>В доставке</option>
@@ -421,11 +437,11 @@ if ($_SESSION['role'] == 'deliveryman'):
                                     </form>
                                 </td>
                             <?php else: ?>
-                                <td><?php echo $row['status']; ?></td>
+                                <td <?php if ($row['status'] === 'Доставлен') echo 'style="background-color: #70d375;"'; ?>><?php echo $row['status']; ?></td>
                             <?php endif; ?>
-                            <td><?php echo $row['delivery_time']; ?></td>
-                            <td><?php echo $row['order_time']; ?></td>
-                            <td>
+                            <td <?php if ($row['status'] === 'Доставлен') echo 'style="background-color: #70d375;"'; ?>><?php echo $row['delivery_time']; ?></td>
+                            <td <?php if ($row['status'] === 'Доставлен') echo 'style="background-color: #70d375;"'; ?>><?php echo $row['order_time']; ?></td>
+                            <td <?php if ($row['status'] === 'Доставлен') echo 'style="background-color: #70d375;"'; ?>>
                                 <?php
                                 $order_id = $row['id'];
                                 $dishes = explode("<br>", $row['dishes']);
@@ -456,10 +472,10 @@ if ($_SESSION['role'] == 'deliveryman'):
                                 }
                                 ?>
                             </td>
-                            <td><?php echo $row['comment']; ?></td>
-                            <td><?php echo $row['total_price']." RUB"; ?></td>
-                            <td><?php echo $row['deliveryman_first_name']; ?></td>
-                            <td><?php echo $row['deliveryman_phone_number']; ?></td>
+                            <td <?php if ($row['status'] === 'Доставлен') echo 'style="background-color: #70d375;"'; ?>><?php echo $row['comment']; ?></td>
+                            <td <?php if ($row['status'] === 'Доставлен') echo 'style="background-color: #70d375;"'; ?>><?php echo $row['total_price']." RUB"; ?></td>
+                            <td <?php if ($row['status'] === 'Доставлен') echo 'style="background-color: #70d375;"'; ?>><?php echo $row['deliveryman_first_name']; ?></td>
+                            <td <?php if ($row['status'] === 'Доставлен') echo 'style="background-color: #70d375;"'; ?>><?php echo $row['deliveryman_phone_number']; ?></td>
                         </tr>
                     <?php endwhile; ?>
                     </tbody>

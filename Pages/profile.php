@@ -11,6 +11,11 @@ elseif ($_SESSION['role'] == "manager"){
     header("Location: catalog.php");
     die;
 }
+elseif ($_SESSION['role'] == "cook")
+{
+    header("Location: orders.php");
+    die;
+}
 
 $id = $_SESSION['id'];
 $role = $_SESSION['role'];
