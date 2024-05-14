@@ -80,6 +80,11 @@ $_SESSION['isCart'] = "0";
         tr:hover {
             background-color: #e0e0e0;
         }
+
+        .table_orders
+        {
+            overflow: auto;
+        }
     </style>
 </head>
 <body>
@@ -389,8 +394,6 @@ if ($_SESSION['role'] == 'deliveryman'):
                         <th>Заказанные блюда</th>
                         <th>Комментарий</th>
                         <th>Общая сумма заказа</th>
-                        <th>Имя курьера</th>
-                        <th>Номер телефона курьера</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -409,14 +412,20 @@ if ($_SESSION['role'] == 'deliveryman'):
                                 </td>
                             <?php elseif ($row['status'] === 'В доставке'): ?>
                                 <td <?php if ($row['status'] === 'Доставлен') echo 'style="background-color: #70d375;"'; ?>>
+
                                     <form method="post" action="../php/update_status.php">
                                         <select name="status">
                                             <option value="В доставке" <?php echo ($row['status'] == 'В доставке' ? 'selected' : ''); ?>>В доставке</option>
                                             <option value="Доставлен" <?php echo ($row['status'] == 'Доставлен' ? 'selected' : ''); ?>>Доставлен</option>
                                         </select>
+                                        <br>
+                                        <br>
                                         <input type="hidden" name="order_id" value="<?php echo $row['id']; ?>">
                                         <input type="submit" name="submit" value="Сохранить">
                                     </form>
+                                    <br>
+                                    <br>
+                                    <br>
 
                                     <form method="post" action="../php/update_status.php">
                                         <input type="hidden" name="order_id" value="<?php echo $row['id']; ?>">
@@ -474,8 +483,6 @@ if ($_SESSION['role'] == 'deliveryman'):
                             </td>
                             <td <?php if ($row['status'] === 'Доставлен') echo 'style="background-color: #70d375;"'; ?>><?php echo $row['comment']; ?></td>
                             <td <?php if ($row['status'] === 'Доставлен') echo 'style="background-color: #70d375;"'; ?>><?php echo $row['total_price']." RUB"; ?></td>
-                            <td <?php if ($row['status'] === 'Доставлен') echo 'style="background-color: #70d375;"'; ?>><?php echo $row['deliveryman_first_name']; ?></td>
-                            <td <?php if ($row['status'] === 'Доставлен') echo 'style="background-color: #70d375;"'; ?>><?php echo $row['deliveryman_phone_number']; ?></td>
                         </tr>
                     <?php endwhile; ?>
                     </tbody>

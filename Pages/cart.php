@@ -155,11 +155,11 @@ if ($product_count > 0) {
             $ingredient_name= $connectMySQL->query("SELECT name FROM `ingredients` WHERE `id` = '$ingredient_id'")->fetch_assoc()['name'];
             if ($connectMySQL->query("SELECT is_included FROM `products_to_ingredients` WHERE `product_id` = '$product_id' AND `ingredient_id` = '$ingredient_id'")->fetch_assoc()['is_included'] == 1)
             {
-                echo 'Убрать: ' . $ingredient_name;
+                echo 'Убрать: ' . $ingredient_name . ' ';
             }
             else
             {
-                echo 'Добавить: ' . $ingredient_name;
+                echo 'Добавить: ' . $ingredient_name . ' ';
             }
         }
         echo '</td>';

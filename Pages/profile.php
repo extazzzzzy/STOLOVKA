@@ -51,12 +51,11 @@ $address = $connectMySQL->query("SELECT `address` FROM `users` WHERE `id` = '$id
             background-color: #F39200;
             border-radius: 8px;
             padding: 20px;
-            width: 400px;
             text-align: center;
+            max-width: 300px;
         }
         .container_another {
             text-align: left;
-            margin-left: 74px;
         }
         h1, h3 {
             color: #634E42;
